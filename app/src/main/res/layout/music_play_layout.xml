@@ -1,0 +1,225 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black"
+    android:id="@+id/listen_background"
+    >
+//第一排
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        >
+
+        <ImageView
+            android:id="@+id/iv_listen_back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/icon_back" />
+        <TextView
+            android:id="@+id/listen_title_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="告白气球"
+            android:textColor="#f9f7f7"
+            android:textSize="18dp" />
+        <ImageView
+            android:id="@+id/iv_listen_more"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/icon_more_big" />
+    </LinearLayout>
+    //第二排
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_listen_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            >
+        </android.support.v4.view.ViewPager>
+
+    第三排
+
+    <!-- 点点 -->
+    <LinearLayout
+        android:id="@+id/viewGroup_indicator"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+    </LinearLayout>
+
+    第四排
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_listen_currenttime"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:text="00:00"
+            android:textColor="#f9f7f7"
+            android:textSize="10dp" />
+
+        <SeekBar
+            android:id="@+id/listen_seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/tv_listen_maxtime"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:text="05:00"
+            android:textColor="#f9f7f7"
+            android:textSize="10dp" />
+    </LinearLayout>
+
+    第五排
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <ImageView
+            android:id="@+id/iv_listen_mode"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/icon_listen_repet" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+
+            android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_listen_previous"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:onClick="previous"
+            android:src="@drawable/icon_listen_previous" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/iv_listen_play_pause"
+            android:clickable="true"
+            android:onClick="play"
+            android:src="@drawable/icon_listen_play"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content">
+            <ImageView
+            android:id="@+id/iv_listen_next"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+                android:onClick="next"
+            android:src="@drawable/icon_listen_next" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="25dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/iv_listen_list"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/icon_listen_list"/>
+        </LinearLayout>
+    </LinearLayout>
+    //设置圆盘上的指针
+    <!--<com.example.xieyo.roam.layout.PlayAnimation-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+        <!--/>-->
+
+    第六排
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/iv_listen_favourite"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/icon_listen_isfavorite" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/iv_listen_download"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/icon_listen_download" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:id="@+id/iv_listen_share"
+                android:src="@drawable/icon_listen_share"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/iv_listen_comment"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/icon_listen_comment" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

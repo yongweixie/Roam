@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/apkbackground">
+    <include
+        layout="@layout/head_search_activity"
+        android:layout_width="match_parent"
+        android:layout_height="69dp" />
+    <com.example.xieyo.roam.view.NoScrollViewPager
+        android:id="@+id/search_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+    <ProgressBar
+        android:id="@+id/buttom_control_processbar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_gravity="bottom"
+        android:progressDrawable="@drawable/progress_bar_style" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_controlbar_height"
+        android:background="@color/app_content_color"
+        android:id="@+id/controlbarview"
+
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/ry_control_bar"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="10dp"
+            android:clipToPadding="false">
+        </android.support.v7.widget.RecyclerView>
+
+        <ImageView
+            android:id="@+id/iv_play_bar_play"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginRight="15dp"
+            android:layout_gravity="center"
+            android:src="@drawable/icon_bottom_play" />
+
+        <ImageView
+            android:id="@+id/iv_play_bar_playlist"
+            android:layout_width="28dp"
+            android:layout_marginRight="10dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:src="@drawable/icon_playlist" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/musichall_title"
+    android:layout_marginTop="22dp"
+    android:layout_marginBottom="5dp"
+    android:orientation="horizontal"
+    >
+
+    <View
+        android:layout_width="3dp"
+        android:layout_height="16dp"
+        android:layout_gravity="center"
+        android:id="@+id/colorview"
+        android:background="#FF0000" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:text="QQ音乐"
+        android:layout_gravity="center"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_weight="1"
+        android:textColor="@color/alpha_white_text"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:layout_gravity="center"
+        android:id="@+id/viewmore"
+        android:text="查看更多 "
+        android:textColor="@color/alpha_50_white"
+        />
+    <ImageView
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_gravity="center"
+        android:src="@drawable/icon_arrow_gray"
+        android:textColor="@color/alpha_70_white"
+        android:layout_marginEnd="10dp"
+        />
+
+</LinearLayout>

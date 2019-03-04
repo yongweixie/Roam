@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mymusic_scroll_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:descendantFocusability="blocksDescendants"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="2dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                    <com.example.xieyo.roam.view.MyMusicItemLayout
+                        android:id="@+id/localview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:musicItem_icon="@drawable/item_music"
+                        app:musicItem_icon_color="@color/AppBasecolor"
+                        app:musicItem_desc="@string/default_num"
+
+                        app:musicItem_name="本地歌曲"
+                        />
+                <com.example.xieyo.roam.view.MyMusicItemLayout
+                    android:id="@+id/historyview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:musicItem_icon="@drawable/item_history"
+                    app:musicItem_icon_color="@color/amber"
+                    app:musicItem_desc="@string/default_num"
+                    app:musicItem_name="播放历史"
+                    />
+                <com.example.xieyo.roam.view.MyMusicItemLayout
+                    android:id="@+id/favoriteview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:musicItem_icon="@drawable/item_favorite"
+                    app:musicItem_icon_color="@color/pink"
+                    app:musicItem_desc="@string/default_num"
+                    app:musicItem_name="我的收藏"
+                    />
+                <com.example.xieyo.roam.view.MyMusicItemLayout
+                    android:id="@+id/downloadview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:musicItem_icon="@drawable/item_download"
+                    app:musicItem_icon_color="@color/black"
+                    app:musicItem_desc="@string/default_num"
+                    app:musicItem_name="下载管理"
+                    />
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:orientation="vertical"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="2dp"
+            app:cardUseCompatPadding="true">
+
+
+
+        </android.support.v7.widget.CardView>
+
+
+    </LinearLayout>
+
+
+</android.support.v4.widget.NestedScrollView>

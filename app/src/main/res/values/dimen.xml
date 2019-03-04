@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>    
+    <dimen name="margin_">10dp</dimen>
+    <dimen name="pading_">5dp</dimen>
+    <dimen name="btn_size">22sp</dimen>
+    <dimen name="txt_size">18sp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <!-- 分割线高度 -->
+    <dimen name="line_height">1dp</dimen>
+    <dimen name="chat_title_bar_txt_size">20sp</dimen>
+
+
+    <dimen name="activity2_horizontal_margin">8dp</dimen>
+    <dimen name="activity2_vertical_margin">10dp</dimen>
+    <dimen name="pddtop">50dp</dimen>
+    <dimen name="size">20dp</dimen>
+    <dimen name="height">30dp</dimen>
+    <dimen name="leftpadd">40dp</dimen>
+    <dimen name="heightm">110dp</dimen>
+    <dimen name="gouwuheight">38dp</dimen>
+    <dimen name="touxiangheight">66dp</dimen>
+    <dimen name="bottom_controlbar_height">48dp</dimen>
+
+
+</resources>

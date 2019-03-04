@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+     >
+
+    <size
+        android:width="2000dp"
+        android:height="40dp"/>
+    <!--&lt;!&ndash; 填充的颜色 &ndash;&gt;-->
+
+    <gradient
+        android:angle="270"
+        android:startColor="#33000000"
+        android:endColor="@color/transparent"/>
+
+
+    <corners
+        android:topLeftRadius="5dp"
+        android:topRightRadius="5dp"
+        android:bottomRightRadius="5dip"
+        android:bottomLeftRadius="5dip"
+        />
+
+
+</shape>

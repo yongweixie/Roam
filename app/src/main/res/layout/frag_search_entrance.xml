@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:background="@color/app_content_color">
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="热门搜索"
+    android:textStyle="bold"
+    android:textSize="14sp"
+    android:layout_marginStart="10dp"
+    android:layout_marginTop="15dp"
+    android:textColor="@color/white"
+    />
+    <com.cunoraz.tagview.TagView
+        xmlns:tagview="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/tag_group"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_margin="15dp"
+        tagview:lineMargin="10dp"
+        tagview:tagMargin="10dp"
+        tagview:textPaddingLeft="12dp"
+        tagview:textPaddingTop="5dp"
+        tagview:textPaddingRight="12dp"
+        tagview:textPaddingBottom="5dp"
+        />
+</LinearLayout>

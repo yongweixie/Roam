@@ -1,0 +1,40 @@
+<resources>
+    <declare-styleable name="MyMusicItemLayout">
+        <attr name="musicItem_name" format="reference|string" />
+        <attr name="musicItem_icon" format="reference|integer" />
+        <attr name="musicItem_desc" format="reference|string" />
+        <attr name="musicItem_icon_color" format="reference|color" />
+    </declare-styleable>
+    <declare-styleable name="CircleImageView">
+        <attr name="cover"  format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="LocalMusicListLayout">
+        <attr name="music_title" format="reference|string" />
+        <attr name="music_albumbmp" format="reference|integer" />
+        <attr name="music_artist_album" format="reference|string" />
+    </declare-styleable>
+    <declare-styleable name="BackgourndAnimation">
+        <attr name="number" format="reference|integer" />
+    </declare-styleable>
+    <declare-styleable name="LrcView">
+        <attr name="lrcTextSize" format="dimension"/>
+        <attr name="lrcLineSpaceSize" format="dimension"/>
+        <attr name="lrcNormalTextColor" format="reference|color"/>
+        <attr name="lrcCurrentTextColor" format="reference|color"/>
+        <attr name="lrcTouchDelay" format="integer"/>   //delay of rolling back
+        <attr name="noLrcTextSize" format="dimension"/>
+        <attr name="noLrcTextColor" format="reference|color"/>
+        <attr name="indicatorLineHeight" format="dimension"/>
+        <attr name="indicatorTextSize" format="dimension"/>
+        <attr name="indicatorTextColor" format="reference|color"/>
+        <attr name="currentIndicateLrcColor" format="reference|color"/> //current lyric line color
+        <attr name="indicatorTouchDelay" format="integer"/>    //delay of indicator's disappearance
+        <attr name="indicatorLineColor" format="reference|color"/> // color of indicator line
+        <attr name="indicatorStartEndMargin" format="dimension"/>  //start and end margin of indicator
+        <attr name="iconLineGap" format="dimension"/>   // space between indicator's playing icon and line
+        <attr name="playIconWidth" format="dimension"/>
+        <attr name="playIconHeight" format="dimension"/>
+        <attr name="playIcon" format="reference"/>   // indicator's playing icon
+    </declare-styleable>
+</resources>
