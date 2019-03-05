@@ -1,50 +1,36 @@
 package com.example.xieyo.roam.musicfragment;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Bundle;
-import android.os.Message;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+
+import android.content.Context;
+import android.net.Uri;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
+import com.example.xieyo.roam.CustomView.MyJzvdStd;
 import com.example.xieyo.roam.LazyFragment;
-import com.example.xieyo.roam.MyAdapter.MusicHallAdapter;
 import com.example.xieyo.roam.R;
-import com.example.xieyo.roam.tools.MusicApi;
-import com.example.xieyo.roam.tools.MusicHallList;
-import com.example.xieyo.roam.view.SpacesItemDecoration;
-
-import java.net.URL;
 
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
 
 public class MusicDiscoveryFragment  extends LazyFragment {
     public int setContentView() {
         return R.layout.musicdiscovery_fragment;
     }
 
+
     public void init() {
-
-
+        JzvdStd jzvdStd = (JzvdStd)rootView. findViewById(R.id.videoplayer);
+        jzvdStd.setUp("http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4"
+                , "饺子闭眼睛" , Jzvd.SCREEN_WINDOW_NORMAL);
     }
     @Override
     public void lazyLoad() {
-
-        JzvdStd jzvdStd = (JzvdStd) rootView.findViewById(R.id.videoplayer);
-        jzvdStd.setUp("https://api.bzqll.com/music/tencent/mvUrl?key=579621905&id=m00238resnh&r=4", "饺子闭眼睛" , Jzvd.SCREEN_WINDOW_NORMAL);
-
-        Glide.with(getContext()).load("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640")
-                .into(jzvdStd.thumbImageView);
-        jzvdStd.startVideo();
-    }
+//        MyJzvdStd jzvdStd = (MyJzvdStd)rootView. findViewById(R.id.videoplayer);
+//        jzvdStd.setUp("http://jzvd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4"
+//                , "饺子快长大", JzvdStd.SCREEN_WINDOW_NORMAL);
+//        Glide.with(this).load("http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png").into(jzvdStd.thumbImageView);
+//
+}
 
 }

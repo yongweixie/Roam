@@ -7,18 +7,11 @@ import android.os.Message;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.xieyo.roam.BaseInfo;
 import com.example.xieyo.roam.MyAdapter.MusicHallAdapter;
-import com.example.xieyo.roam.MyAdapter.MusicListRecyclerAdapter;
 import com.example.xieyo.roam.R;
-import com.example.xieyo.roam.Service.PlayService;
-import com.example.xieyo.roam.musicfragment.MusicHallFragment;
-import com.example.xieyo.roam.searchfragment.SearchMusicAllFragment;
-import com.example.xieyo.roam.tools.DateBaseUtils;
-import com.example.xieyo.roam.tools.Music;
 import com.example.xieyo.roam.tools.MusicApi;
 import com.example.xieyo.roam.tools.MusicHallList;
 import com.example.xieyo.roam.view.SpacesItemDecoration;
@@ -27,12 +20,10 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.xieyo.roam.musicactivity.SearchActivity.getSearchViewtext;
-
 public class MusicListActivity extends BaseMusicActivity implements BaseQuickAdapter.OnItemClickListener,BaseQuickAdapter.RequestLoadMoreListener {
     private RecyclerView ry;
     private static MusicHallAdapter mAdapter;
-    private static List<MusicHallList> mList=new ArrayList<MusicHallList>();
+    private static List<MusicHallList> mList=new ArrayList<>();
 
     private final static MusicListActivity.Listndler handler=new MusicListActivity.Listndler(new MusicListActivity());
 

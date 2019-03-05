@@ -2,6 +2,7 @@ package com.example.xieyo.roam.Service;
 
 import android.app.Service;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.util.Log;
@@ -11,7 +12,7 @@ import com.example.xieyo.roam.BaseInfo;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class PlayService extends Service {
+public class PlayService extends Service implements MediaPlayer.OnPreparedListener {
     // 操作标记
     public static final int FLAG_LOAD_PATH = 0;// 加载播放列表
     public static final int FLAG_PLAY = 1;// 开始/暂停
@@ -31,6 +32,9 @@ public class PlayService extends Service {
     private String[] lists;
     // 媒体播放器
     private MediaPlayer player;
+//    private PLMediaPlayer mMediaPlayer = new PLMediaPlayer(this);
+    //PLMediaPlayer mMediaPlayer = new PLMediaPlayer(mContext, mAVOptions);
+
     // 当前播放音乐的下角标
     private Timer timer;
     private int Getindex;
@@ -42,12 +46,21 @@ public class PlayService extends Service {
     public IBinder onBind(Intent intent) {
         return null;
     }
+    @Override
+    public void onPrepared(MediaPlayer mp) {
+        // TODO Auto-generated method stub
+        mp.start();
+        sendMaxProgress();
 
+    }
     @Override
     public void onCreate() {
         super.onCreate();
         // 初始化媒体播放器
         player = new MediaPlayer();
+        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        player.setOnPreparedListener(this);
+
         curIndex= BaseInfo.CurrentMusicIndex;
     }
 
@@ -55,7 +68,7 @@ public class PlayService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent != null) {
             int flag = intent.getIntExtra("flag", -1);
-             Getindex=intent.getIntExtra("index",-1);
+            Getindex=intent.getIntExtra("index",-1);
             switch (flag) {
                 case FLAG_LOAD_PATH:// 加载播放列表
                     lists = intent.getStringArrayExtra("list");
@@ -87,7 +100,7 @@ public class PlayService extends Service {
                         // 播放
                         play(curIndex);
                     }
-                        break;
+                    break;
                 case FLAG_PREVIOUS:// 上一曲
                     if (curIndex > 0) {
                         // 重置播放器资源
@@ -132,16 +145,17 @@ public class PlayService extends Service {
             // 设置播放文件的路径
             player.setDataSource(lists[index]);
             // 播放器执行准备工作，获取播放音乐信息，例如音乐长度
-            player.prepare();
+           // player.prepare();
+            player.prepareAsync();
+
             // 通知SeekBar设置最大值
-            sendMaxProgress();
         } catch (Exception e) {
             e.printStackTrace();
 
         }
-        // 播放音乐
-        player.start();
+        // media.prepare();
 
+        // 播放音乐
         // 音乐播放后，控制SeekBar进度
         timer = new Timer();
         timer.schedule(new TimerTask() {

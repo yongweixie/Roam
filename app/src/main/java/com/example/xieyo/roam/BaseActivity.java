@@ -119,6 +119,8 @@ public class BaseActivity extends AppCompatActivity {
             String[] permissions = permissionList.toArray(new String [permissionList.size()]);
             ActivityCompat.requestPermissions(BaseActivity.this,permissions,1);
         }
+
+
     }
 
 }

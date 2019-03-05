@@ -19,7 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -29,16 +28,14 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.xieyo.roam.BaseActivity;
 import com.example.xieyo.roam.BaseInfo;
 import com.example.xieyo.roam.R;
-import com.example.xieyo.roam.Service.PlayService;
 import com.example.xieyo.roam.MyAdapter.BottomViewAdapter;
 import com.example.xieyo.roam.MyAdapter.MusicListRecyclerAdapter;
+import com.example.xieyo.roam.Service.PlayService;
 import com.example.xieyo.roam.tools.DateBaseUtils;
 import com.example.xieyo.roam.tools.Music;
 import com.example.xieyo.roam.tools.MusicApi;
 import com.example.xieyo.roam.tools.MusicList;
 import com.example.xieyo.roam.view.MusicListDialog;
-
-import org.jsoup.Connection;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -164,7 +161,6 @@ public class OnlineMusicActivity extends BaseActivity implements BaseQuickAdapte
             @Override
             public void onScrolled(RecyclerView rv, int dx, int dy) {
                 super.onScrolled(rv, dx, dy);
-                Log.i("12345678", rv.computeVerticalScrollOffset() + "");
                 int minHeight = 50;
                 int maxHeight = 500;
                 if (rv.computeVerticalScrollOffset() <= minHeight) {
