@@ -82,8 +82,13 @@
 
         <SeekBar
             android:id="@+id/listen_seekbar"
+            android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxHeight="2dp"
+            android:minHeight="2dp"
+            android:progressDrawable="@drawable/po_seekbar"
+            android:thumb="@drawable/seekbar_thumb"
             android:layout_weight="1" />
         <TextView
             android:id="@+id/tv_listen_maxtime"

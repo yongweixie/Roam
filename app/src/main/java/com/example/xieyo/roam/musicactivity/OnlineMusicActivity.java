@@ -11,7 +11,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -23,7 +22,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.xieyo.roam.BaseActivity;
 import com.example.xieyo.roam.BaseInfo;
@@ -106,7 +107,7 @@ public class OnlineMusicActivity extends BaseActivity implements BaseQuickAdapte
         // 填充数据
         mAdapter = new MusicListRecyclerAdapter( mList);
         mAdapter.setOnItemClickListener(this);
-        View headerscroolView=getLayoutInflater().inflate(R.layout.online_music_scrool_header, null);
+        View headerscroolView=getLayoutInflater().inflate(R.layout.head_online_music_scrool, null);
         mAdapter.addHeaderView(headerscroolView);
 
         ImageView iv_list_cover=headerscroolView.findViewById(R.id.iv_musiclist_cover);
@@ -135,7 +136,10 @@ public class OnlineMusicActivity extends BaseActivity implements BaseQuickAdapte
                         RequestOptions options = new RequestOptions().placeholder(R.drawable.default_cover)
                                 .optionalTransform((new CircleCrop()))
                                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+                        DrawableCrossFadeFactory drawableCrossFadeFactory = new DrawableCrossFadeFactory.Builder(300).setCrossFadeEnabled(true).build();
+
                         Glide.with(getApplication()).load(ml.userface).apply(options)
+                                .transition(DrawableTransitionOptions.with(drawableCrossFadeFactory))
                                 .into(iv_userface);
                         tv_list_title.setText(BaseInfo.MusicListTitle);
                         tv_playcount.setText(ml.playCount);

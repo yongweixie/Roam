@@ -16,7 +16,7 @@ public class RecentMusicActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recent);
         JzvdStd jzvdStd = (JzvdStd) findViewById(R.id.videoplayer);
-        jzvdStd.setUp("http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4"
+        jzvdStd.setUp("http://upos-hz-mirrorwcsu.acgvideo.com/upgcxcode/95/43/53064395/53064395-1-208.mp4?e=ig8euxZM2rNcNbeHhbUVhoMHnWNBhwdEto8g5X10ugNcXBlqNCNEto8g5gNvNE3DN0B5tZlqNxTEto8BTrNvN05fqx6S5ahE9IMvXBvEuENvNCImNEVEua6m2jIxux0CkF6s2JZv5x0DQJZY2F8SkXKE9IB5QK==&ua=tvproj&deadline=1551965524&gen=playurl&nbs=1&oi=2501663261&os=wcsu&trid=9ff0e52c159a48fab4f1db818221c085&uipk=5&upsig=feb49fadb4a457fcfbcfda7d6d3f6355&uparams=e,ua,deadline,gen,nbs,oi,os,trid,uipk"
                 , "饺子闭眼睛" , Jzvd.SCREEN_WINDOW_NORMAL);
 
     }
@@ -32,4 +32,5 @@ public class RecentMusicActivity extends AppCompatActivity {
 //        super.onPause();
 //        Jzvd.releaseAllVideos();
 //    }
+
 }

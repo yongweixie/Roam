@@ -40,7 +40,7 @@ public class MusicFragment extends Fragment implements View.OnClickListener,Base
     private List<Fragment> mFragments;
     private ItemFragmentAdapter imAdapter;
     private BottomViewAdapter cbAdapter;
-    private ViewPager viewpager;
+    private static ViewPager viewpager;
     private Context con;
     private TabLayout tablayout2;
     private String[] names = {"我的音乐", "音乐馆","发现"};
@@ -108,6 +108,7 @@ public class MusicFragment extends Fragment implements View.OnClickListener,Base
 
         imAdapter = new ItemFragmentAdapter(getChildFragmentManager(), names, mFragments, con);
         viewpager.setAdapter(imAdapter);
+        viewpager.setOffscreenPageLimit(2);
         tablayout2.setupWithViewPager(viewpager);
         cbAdapter=new BottomViewAdapter(R.layout.bottom_control_bar,BaseInfo.Currentmusiclist);
 
@@ -153,7 +154,10 @@ public class MusicFragment extends Fragment implements View.OnClickListener,Base
 
 
 
-
+    public static void setPage(int index)
+    {
+        viewpager.setCurrentItem(index);
+    }
 
     private void initList(List<Music> musiclist ) {
 

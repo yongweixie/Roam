@@ -51,7 +51,6 @@ public class PlayService extends Service implements MediaPlayer.OnPreparedListen
         // TODO Auto-generated method stub
         mp.start();
         sendMaxProgress();
-
     }
     @Override
     public void onCreate() {
@@ -99,6 +98,7 @@ public class PlayService extends Service implements MediaPlayer.OnPreparedListen
                     } else {
                         // 播放
                         play(curIndex);
+                        player.start();
                     }
                     break;
                 case FLAG_PREVIOUS:// 上一曲
