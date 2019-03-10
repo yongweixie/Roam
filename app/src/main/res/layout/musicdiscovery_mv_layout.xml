@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+        <com.example.xieyo.roam.CustomView.MyJzvdStd
+            android:layout_width="match_parent"
+            android:id="@+id/mv_player"
+            android:layout_height="188dp">
+        </com.example.xieyo.roam.CustomView.MyJzvdStd>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white"
+        android:id="@+id/mv_title"
+        android:textStyle="bold"
+        android:textSize="14dp"
+        android:text="xxxxxxxxx"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:id="@+id/mv_artist"
+        android:textSize="11dp"
+        android:text="xxxxxxxxx"
+        android:layout_marginBottom="30dp"/>
+
+</LinearLayout>
