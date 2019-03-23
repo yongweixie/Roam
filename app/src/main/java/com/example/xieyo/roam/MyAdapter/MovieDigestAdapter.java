@@ -22,6 +22,6 @@ public class MovieDigestAdapter extends BaseQuickAdapter<MovieDigestData, BaseVi
         //可链式调用赋值
         helper.setText(R.id.content, item.content)
                 .setText(R.id.from, item.from);
-
+//
     }
 }
