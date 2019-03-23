@@ -1,23 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/apkbackground"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/head_bottom_color"
         android:paddingTop="20dp">
 
-        <ImageView
-            android:id="@+id/local_back"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+        <LinearLayout
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:id="@+id/back"
+
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/icon_back" />
+            >
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="15dp"
+                android:layout_gravity="center"
+                android:src="@drawable/icon_back" />
+        </LinearLayout>
 
 
         <TextView
@@ -31,10 +38,23 @@
             android:textColor="@color/white" />
 
     </LinearLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:background="@color/app_content_color"
-        android:id="@+id/ry_music_list"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="@color/app_content_color"
+        >
+        <com.wang.avi.AVLoadingIndicatorView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:indicatorName="BallTrianglePathIndicator"
+            android:id="@+id/loadingview"
+            android:layout_gravity="center"
+            />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/ry_music_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+
 </LinearLayout>

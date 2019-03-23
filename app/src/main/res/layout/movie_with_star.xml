@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:hedgehog="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="175dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.example.xieyo.roam.view.RectImageView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/book_cover"
+            android:src="@drawable/test_book" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/movie_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:textColor="@color/white"
+                android:singleLine="true"
+                android:text="时间的礼物" />
+
+
+            <TextView
+                android:id="@+id/movie_auther"
+                android:layout_width="match_parent"
+                android:layout_height="82dp"
+                android:textSize="14dp"
+                android:textColor="@color/white"
+                android:layout_marginTop="5dp"
+                android:text="时间不是礼物，是刻度" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <com.willy.ratingbar.BaseRatingBar
+                    android:id="@+id/simpleRatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    app:srb_numStars="5"
+                    app:srb_minimumStars="1"
+                    app:srb_rating="2.5"
+                    app:srb_starWidth="12dp"
+                    app:srb_starHeight="12dp"
+                    app:srb_stepSize="0.5"
+                    app:srb_isIndicator="false"
+                    app:srb_clickable="false"
+                    app:srb_clearRatingEnabled="false"
+                    app:srb_starPadding="3dp"
+                    app:srb_drawableEmpty="@mipmap/empty"
+                    app:srb_drawableFilled="@mipmap/filled">
+                </com.willy.ratingbar.BaseRatingBar>
+
+
+                <TextView
+                    android:id="@+id/movie_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:text="7.6"
+                    android:textColor="@color/yellow"
+                    android:textSize="12dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:hedgehog="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.example.xieyo.roam.view.RectImageView
+        android:id="@+id/movie_cover"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <com.example.xieyo.roam.view.marqueeText
+            android:id="@+id/movie_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_marginStart="5dp"
+            android:textSize="14dp"
+            android:text="name"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:focusable="true"
+            android:scrollHorizontally="true"
+            android:focusableInTouchMode="true"
+            android:singleLine="true"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <com.willy.ratingbar.BaseRatingBar
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/simpleRatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:srb_numStars="5"
+                app:srb_minimumStars="0"
+                app:srb_starWidth="12dp"
+                app:srb_starHeight="12dp"
+                app:srb_stepSize="0.5"
+                app:srb_isIndicator="false"
+                app:srb_starPadding="1dp"
+                app:srb_clickable="false"
+                app:srb_scrollable="false"
+                app:srb_clearRatingEnabled="false"
+                app:srb_drawableEmpty="@mipmap/empty"
+                app:srb_drawableFilled="@mipmap/filled">
+            </com.willy.ratingbar.BaseRatingBar>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_gravity="center"
+                android:textColor="@color/yellow"
+                android:id="@+id/movie_rating"
+                android:textSize="12dp"
+                android:text="6.5"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

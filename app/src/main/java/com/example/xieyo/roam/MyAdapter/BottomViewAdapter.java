@@ -13,7 +13,7 @@ import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.xieyo.roam.R;
-import com.example.xieyo.roam.tools.Music;
+import com.example.xieyo.roam.musicbean.Music;
 
 import java.util.List;
 

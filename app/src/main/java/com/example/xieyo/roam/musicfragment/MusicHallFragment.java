@@ -8,15 +8,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.example.xieyo.roam.BaseInfo;
+import com.example.xieyo.roam.baseinfo.MusicBaseInfo;
 import com.example.xieyo.roam.LazyFragment;
 import com.example.xieyo.roam.R;
 import com.example.xieyo.roam.MyAdapter.MusicHallAdapter;
 import com.example.xieyo.roam.musicactivity.MusicListActivity;
 import com.example.xieyo.roam.musicactivity.OnlineMusicActivity;
-import com.example.xieyo.roam.musicactivity.SearchActivity;
 import com.example.xieyo.roam.tools.MusicApi;
-import com.example.xieyo.roam.tools.MusicHallList;
+import com.example.xieyo.roam.musicbean.MusicHallList;
 import com.example.xieyo.roam.view.SpacesItemDecoration;
 
 import java.lang.ref.WeakReference;
@@ -61,11 +60,18 @@ public class MusicHallFragment extends LazyFragment implements BaseQuickAdapter.
                 }
             }
         });
+
+        gridLayoutManager.setInitialPrefetchItemCount(20);
+        ry.setItemViewCacheSize(200);
+        ry.setHasFixedSize(true);
+        ry.setNestedScrollingEnabled(false);
+
         Runnable runnable = new Runnable(){
             @Override
             public void run() {
                 // TODO: http request.
                 //Bundle data = new Bundle();
+
                 for (int i=0;i<3;i++)
                 {
                     MusicHallList titlelist=new MusicHallList();
@@ -108,21 +114,20 @@ public class MusicHallFragment extends LazyFragment implements BaseQuickAdapter.
         {
             Intent intent=new Intent(getContext(), MusicListActivity.class);
             startActivity(intent);
-            BaseInfo.AllMusicListFrom=mList.get(position).from;
+            MusicBaseInfo.AllMusicListFrom=mList.get(position).from;
         }
         else
         {
             //String title = mList.get(position).title;
             // Toast.makeText(getContext(), title, Toast.LENGTH_SHORT).show();
-            BaseInfo.MusicListId=mList.get(position).id;
-            BaseInfo.MusicListImageUrl =mList.get(position).imageUri;
-            BaseInfo.CurrentMusicListFrom=mList.get(position).from;
-            BaseInfo.MusicListTitle=mList.get(position).title;
-            BaseInfo.MusicListPlayCount=mList.get(position).playCount;
+            MusicBaseInfo.MusicListId=mList.get(position).id;
+            MusicBaseInfo.MusicListImageUrl =mList.get(position).imageUri;
+            MusicBaseInfo.CurrentMusicListFrom=mList.get(position).from;
+            MusicBaseInfo.MusicListTitle=mList.get(position).title;
+            MusicBaseInfo.MusicListPlayCount=mList.get(position).playCount;
             Intent intent = new Intent(getContext(), OnlineMusicActivity.class);
             getContext().startActivity(intent);
         }
-
     }
 
 }

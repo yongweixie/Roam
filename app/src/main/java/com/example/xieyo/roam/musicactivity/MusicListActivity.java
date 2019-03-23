@@ -7,14 +7,16 @@ import android.os.Message;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.example.xieyo.roam.BaseInfo;
+import com.example.xieyo.roam.baseinfo.MusicBaseInfo;
 import com.example.xieyo.roam.MyAdapter.MusicHallAdapter;
 import com.example.xieyo.roam.R;
 import com.example.xieyo.roam.tools.MusicApi;
-import com.example.xieyo.roam.tools.MusicHallList;
+import com.example.xieyo.roam.musicbean.MusicHallList;
 import com.example.xieyo.roam.view.SpacesItemDecoration;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -26,10 +28,22 @@ public class MusicListActivity extends BaseMusicActivity implements BaseQuickAda
     private static List<MusicHallList> mList=new ArrayList<>();
 
     private final static MusicListActivity.Listndler handler=new MusicListActivity.Listndler(new MusicListActivity());
+    private final static MusicListActivity.Listndler2 handler2=new MusicListActivity.Listndler2(new MusicListActivity());
+    private static AVLoadingIndicatorView avi;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_musiclist);
+        avi = findViewById(R.id.loadingview);
+        avi.show();
+        LinearLayout backbutton = findViewById(R.id.back);
+
+        backbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         Init();
     }
     int page=1;
@@ -48,12 +62,25 @@ public class MusicListActivity extends BaseMusicActivity implements BaseQuickAda
 
         }
     }
+    private static final class Listndler2 extends Handler {
+        WeakReference<MusicListActivity> mMainActivityWeakReference;
 
+        public Listndler2(MusicListActivity mainActivity) {
+            mMainActivityWeakReference = new WeakReference<>(mainActivity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            avi.hide();
+            mAdapter.notifyDataSetChanged();
+        }
+    }
     public void Init() {
 
 
         ry = findViewById(R.id.ry_music_list);
-        mList=MusicApi.getMusicList(1,6,BaseInfo.AllMusicListFrom);
+
         mAdapter=new MusicHallAdapter(mList);
         mAdapter.setOnItemClickListener(this);
         mAdapter.setOnLoadMoreListener(this,ry);
@@ -80,6 +107,20 @@ public class MusicListActivity extends BaseMusicActivity implements BaseQuickAda
             }
         });
 
+        Runnable runnable = new Runnable(){
+            @Override
+            public void run() {
+                page++;
+
+                // TODO: http request.
+                //Bundle data = new Bundle();
+                Message msg = new Message();
+                mList.addAll(MusicApi.getMusicList(1,6, MusicBaseInfo.AllMusicListFrom));
+                handler2.sendMessage(msg);
+            }
+
+        };
+        new Thread(runnable).start();
     }
 
     @Override
@@ -92,7 +133,7 @@ public class MusicListActivity extends BaseMusicActivity implements BaseQuickAda
                 // TODO: http request.
                 //Bundle data = new Bundle();
                     Message msg = new Message();
-                    mList.addAll(MusicApi.getMusicList(page,6,BaseInfo.AllMusicListFrom));
+                    mList.addAll(MusicApi.getMusicList(page,6, MusicBaseInfo.AllMusicListFrom));
                     handler.sendMessage(msg);
             }
 
@@ -101,12 +142,18 @@ public class MusicListActivity extends BaseMusicActivity implements BaseQuickAda
 
     }
         public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-            BaseInfo.MusicListId=mList.get(position).id;
-            BaseInfo.MusicListImageUrl =mList.get(position).imageUri;
-            BaseInfo.CurrentMusicListFrom=mList.get(position).from;
-            BaseInfo.MusicListTitle=mList.get(position).title;
-            BaseInfo.MusicListPlayCount=mList.get(position).playCount;
+            MusicBaseInfo.MusicListId=mList.get(position).id;
+            MusicBaseInfo.MusicListImageUrl =mList.get(position).imageUri;
+            MusicBaseInfo.CurrentMusicListFrom=mList.get(position).from;
+            MusicBaseInfo.MusicListTitle=mList.get(position).title;
+            MusicBaseInfo.MusicListPlayCount=mList.get(position).playCount;
             Intent intent = new Intent(this, OnlineMusicActivity.class);
             startActivity(intent);
         }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mList.clear();
+    }
 }

@@ -18,8 +18,10 @@ import com.example.xieyo.roam.fragment.BookFragment;
 import com.example.xieyo.roam.MyAdapter.MainAdapter;
 import com.example.xieyo.roam.fragment.MovieFragment;
 import com.example.xieyo.roam.fragment.MusicFragment;
+import com.example.xieyo.roam.launch.StartActivity;
 import com.example.xieyo.roam.musicactivity.SearchActivity;
-import com.example.xieyo.roam.tools.Music;
+import com.example.xieyo.roam.musicbean.Music;
+import com.example.xieyo.roam.tools.DateBaseUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +77,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 item.setChecked(true);
                 switch(item.getItemId()) {
-                    //case    R.id.
+                    case    R.id.logout:
+
+                        DateBaseUtils dateBaseUtils=new DateBaseUtils(MainActivity.this);
+                        DateBaseUtils.setLoginState(false);
+                        Intent intent=new Intent(MainActivity.this, StartActivity.class);
+                        startActivity(intent);
+
+                        break;
 
                 }
                 Toast.makeText(MainActivity.this,item.getTitle().toString(),Toast.LENGTH_SHORT).show();
@@ -92,12 +101,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         adapter = new MainAdapter(getSupportFragmentManager(), fragments, titile);
 
         mViewPager.setAdapter(adapter);
+        mViewPager.setOffscreenPageLimit(2);
         //mTabLayout.setBackgroundResource(R.drawable.actionbar_book_selected);
         mTabLayout.setupWithViewPager(mViewPager);
         mViewPager.setCurrentItem(1);//设置当前页
+
         setupTabIcons();
-
-
     }
 
 
@@ -131,6 +140,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 Intent intent=new Intent(this, SearchActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.quit:
+                DateBaseUtils dateBaseUtils=new DateBaseUtils(this);
+                DateBaseUtils.setLoginState(false);
+                intent=new Intent(this, StartActivity.class);
+                startActivity(intent);
+                break;
         }
     }
 //    public void onBackPressed() {
@@ -161,7 +176,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             setIntent.addCategory(Intent.CATEGORY_HOME);
             setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(setIntent);
-
         }
     }
 
@@ -170,7 +184,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         super.onPause();
         Jzvd.releaseAllVideos();
     }
-
 }
 
 

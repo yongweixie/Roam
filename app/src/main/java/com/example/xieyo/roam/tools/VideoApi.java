@@ -1,13 +1,11 @@
 package com.example.xieyo.roam.tools;
 
+import com.example.xieyo.roam.musicbean.Mv;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -16,14 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class VideoApi {
 
 
 
-    public static List<Mv>  getQQMvlist(int page,int count,int order)
+    public static List<Mv>  getQQMvlist(int page, int count, int order)
     {
         List<Mv> mvlist = new ArrayList<>();
 

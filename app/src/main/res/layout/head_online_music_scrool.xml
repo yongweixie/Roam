@@ -37,7 +37,6 @@
                     android:id="@+id/tv_playCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="21万"
                     android:textColor="@color/white"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -69,9 +68,8 @@
                     android:layout_width="26dp"
                     android:layout_height="26dp"
                     android:layout_gravity="center"
-
                     android:layout_marginRight="3dp"
-                    android:src="@drawable/default_userface" />
+                   />
                 <TextView
                     android:id="@+id/tv_username"
                     android:layout_width="wrap_content"

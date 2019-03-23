@@ -5,11 +5,13 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.xieyo.roam.R;
-import com.example.xieyo.roam.tools.MusicHallList;
+import com.example.xieyo.roam.musicbean.MusicHallList;
 
 import java.util.List;
 
@@ -33,8 +35,6 @@ public class MusicHallAdapter extends BaseMultiItemQuickAdapter<MusicHallList, B
                 {
                     helper.setBackgroundRes(R.id.colorview,R.color.red);
                     helper.setText(R.id.tv_content,"网易云音乐");
-
-
                 }
                 if(item.from==1)
                 {
@@ -55,6 +55,8 @@ public class MusicHallAdapter extends BaseMultiItemQuickAdapter<MusicHallList, B
                 RequestOptions options = new RequestOptions().placeholder(R.drawable.default_cover)
                         .optionalTransform(new RoundedCornersTransformation(15,0, RoundedCornersTransformation.CornerType.ALL))
                         .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+                DrawableCrossFadeFactory drawableCrossFadeFactory = new DrawableCrossFadeFactory.Builder(300).setCrossFadeEnabled(true).build();
+
                 Glide.with(mContext).load(item.imageUri)
                         .apply(options)
                         .into(coverview);

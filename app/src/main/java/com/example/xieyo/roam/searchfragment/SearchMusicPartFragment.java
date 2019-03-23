@@ -10,14 +10,14 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.example.xieyo.roam.BaseInfo;
+import com.example.xieyo.roam.baseinfo.MusicBaseInfo;
 import com.example.xieyo.roam.LazyFragment;
 import com.example.xieyo.roam.MyAdapter.MusicListRecyclerAdapter;
 import com.example.xieyo.roam.R;
-import com.example.xieyo.roam.Service.PlayService;
+import com.example.xieyo.roam.service.PlayService;
 import com.example.xieyo.roam.musicactivity.SearchActivity;
 import com.example.xieyo.roam.tools.DateBaseUtils;
-import com.example.xieyo.roam.tools.Music;
+import com.example.xieyo.roam.musicbean.Music;
 import com.example.xieyo.roam.tools.MusicApi;
 
 import java.io.InputStream;
@@ -100,11 +100,11 @@ public class SearchMusicPartFragment extends LazyFragment  implements BaseQuickA
             if(msg.arg2==1)
             {
                 SearchActivity.frenchlist(mList.get(msg.arg1));
-                int index= BaseInfo.Currentmusiclist.size()-1;
-                initList(BaseInfo.Currentmusiclist);
+                int index= MusicBaseInfo.Currentmusiclist.size()-1;
+                initList(MusicBaseInfo.Currentmusiclist);
 
                 DateBaseUtils.setIndex(index);
-                BaseInfo.CurrentMusicIndex=index;
+                MusicBaseInfo.CurrentMusicIndex=index;
 
                 Intent intent = new Intent(con, PlayService.class);
                 intent.putExtra("index", index);

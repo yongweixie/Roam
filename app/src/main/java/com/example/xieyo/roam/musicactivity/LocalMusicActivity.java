@@ -22,14 +22,14 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.example.xieyo.roam.BaseInfo;
+import com.example.xieyo.roam.baseinfo.MusicBaseInfo;
 import com.example.xieyo.roam.R;
 import com.example.xieyo.roam.MyAdapter.MusicListRecyclerAdapter;
 import com.example.xieyo.roam.MyAdapter.BottomViewAdapter;
-import com.example.xieyo.roam.Service.PlayService;
+import com.example.xieyo.roam.service.PlayService;
 import com.example.xieyo.roam.tools.DateBaseUtils;
 import com.example.xieyo.roam.tools.ImageUtils;
-import com.example.xieyo.roam.tools.Music;
+import com.example.xieyo.roam.musicbean.Music;
 import com.example.xieyo.roam.view.SpacesItemDecoration;
 
 import java.text.SimpleDateFormat;
@@ -64,15 +64,21 @@ public class LocalMusicActivity extends BaseMusicActivity implements   BaseQuick
         setContentView(R.layout.activity_localmusic);
         initView(this);
         initReceiver();
-        initList(BaseInfo.Currentmusiclist);
+        initList(MusicBaseInfo.Currentmusiclist);
 
     }
 
     private void initView(Context context) {
         mContext = context;
-        btn_back=findViewById(R.id.local_back);
-        btn_back.setOnClickListener(this);
-        local_songnum_text=findViewById(R.id.local_songnum_text);
+        LinearLayout backbutton = findViewById(R.id.back);
+
+        backbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        local_songnum_text=findViewById(R.id.songnum);
         //获取editor对象
 
         processbar=findViewById(R.id.buttom_control_processbar);
@@ -82,9 +88,9 @@ public class LocalMusicActivity extends BaseMusicActivity implements   BaseQuick
         controlbarview=findViewById(R.id.controlbarview);
 
         DateBaseUtils dateBaseUtils=new DateBaseUtils(mcon);
-        BaseInfo.Currentmusiclist.clear();
-        BaseInfo.Currentmusiclist.addAll(DateBaseUtils.getMusicList()) ;
-        BaseInfo.CurrentMusicIndex=DateBaseUtils.getIndex();
+        MusicBaseInfo.Currentmusiclist.clear();
+        MusicBaseInfo.Currentmusiclist.addAll(DateBaseUtils.getMusicList()) ;
+        MusicBaseInfo.CurrentMusicIndex=DateBaseUtils.getIndex();
 
         control_bar_paly_pause.setOnClickListener(this);
         control_bar_musiclsit.setOnClickListener(this);
@@ -140,7 +146,7 @@ public class LocalMusicActivity extends BaseMusicActivity implements   BaseQuick
 
         ry_control_bar=findViewById(R.id.ry_control_bar);
 
-        cbAdapter=new BottomViewAdapter(R.layout.bottom_control_bar,BaseInfo.Currentmusiclist);
+        cbAdapter=new BottomViewAdapter(R.layout.bottom_control_bar, MusicBaseInfo.Currentmusiclist);
 
         cbAdapter.notifyDataSetChanged();
         ry_control_bar.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
@@ -148,7 +154,7 @@ public class LocalMusicActivity extends BaseMusicActivity implements   BaseQuick
         PagerSnapHelper helper = new PagerSnapHelper();
         helper.attachToRecyclerView(ry_control_bar);
         //ry_control_bar.scrollToPosition(MainActivity.current_music_index);
-        if (BaseInfo.Currentmusiclist.size()==0)
+        if (MusicBaseInfo.Currentmusiclist.size()==0)
         {
             controlbarview.setVisibility(View.GONE);
         }
@@ -156,7 +162,7 @@ public class LocalMusicActivity extends BaseMusicActivity implements   BaseQuick
         {
             controlbarview.setVisibility(View.VISIBLE);
             cbAdapter.setOnItemClickListener(this);
-            ry_control_bar.scrollToPosition(BaseInfo.CurrentMusicIndex);
+            ry_control_bar.scrollToPosition(MusicBaseInfo.CurrentMusicIndex);
         }
         ry_control_bar.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -178,7 +184,7 @@ public class LocalMusicActivity extends BaseMusicActivity implements   BaseQuick
                         intent.putExtra("flag", PlayService.FLAG_PLAY);
                         startService(intent);
                         DateBaseUtils.setIndex(first);
-                        BaseInfo.CurrentMusicIndex=first;
+                        MusicBaseInfo.CurrentMusicIndex=first;
                     }
                 }
 
@@ -194,13 +200,13 @@ public class LocalMusicActivity extends BaseMusicActivity implements   BaseQuick
         if (adapter==mAdapter)
         {
             controlbarview.setVisibility(View.VISIBLE);
-            BaseInfo.Currentmusiclist.clear();
-            BaseInfo.Currentmusiclist.addAll(musiclist);
+            MusicBaseInfo.Currentmusiclist.clear();
+            MusicBaseInfo.Currentmusiclist.addAll(musiclist);
             DateBaseUtils dateBaseUtils=new DateBaseUtils(mcon);
-            DateBaseUtils.SetMusicList(BaseInfo.Currentmusiclist);
+            DateBaseUtils.SetMusicList(MusicBaseInfo.Currentmusiclist);
             cbAdapter.notifyDataSetChanged();
-            initList(BaseInfo.Currentmusiclist);
-            int index=BaseInfo.Currentmusiclist.get(position).Musicindex;
+            initList(MusicBaseInfo.Currentmusiclist);
+            int index= MusicBaseInfo.Currentmusiclist.get(position).Musicindex;
             if (currentplayID!=index)
             {
                 Intent intent = new Intent(this, PlayService.class);
@@ -212,7 +218,7 @@ public class LocalMusicActivity extends BaseMusicActivity implements   BaseQuick
             }
             currentplayID=index;
             DateBaseUtils.setIndex(index);
-            BaseInfo.CurrentMusicIndex=index;
+            MusicBaseInfo.CurrentMusicIndex=index;
         }
         if (adapter==cbAdapter)
         {
@@ -224,9 +230,6 @@ public class LocalMusicActivity extends BaseMusicActivity implements   BaseQuick
     public void onClick(View v) {
 
         switch (v.getId()){
-            case R.id.local_back:
-                 finish();
-                break;
             case R.id.iv_play_bar_playlist:
                 //
                 break;

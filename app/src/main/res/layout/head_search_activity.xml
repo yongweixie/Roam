@@ -7,13 +7,20 @@
     android:background="@color/head_bottom_color"
     android:paddingTop="25dp">
 
-    <ImageView
-        android:id="@+id/local_back"
-        android:layout_width="25dp"
-        android:layout_height="20dp"
+    <LinearLayout
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:id="@+id/back"
+
         android:layout_gravity="center_vertical"
-        android:layout_marginStart="18dp"
-        android:src="@drawable/icon_back" />
+        >
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="15dp"
+            android:layout_gravity="center"
+            android:src="@drawable/icon_back" />
+    </LinearLayout>
 
 <android.support.v7.widget.SearchView
     android:layout_width="wrap_content"

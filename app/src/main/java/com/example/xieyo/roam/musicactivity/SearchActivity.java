@@ -23,18 +23,18 @@ import android.widget.SeekBar;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.xieyo.roam.BaseActivity;
-import com.example.xieyo.roam.BaseInfo;
+import com.example.xieyo.roam.baseinfo.MusicBaseInfo;
 import com.example.xieyo.roam.MyAdapter.BottomViewAdapter;
 import com.example.xieyo.roam.MyAdapter.MainAdapter;
 import com.example.xieyo.roam.R;
-import com.example.xieyo.roam.Service.PlayService;
+import com.example.xieyo.roam.service.PlayService;
 import com.example.xieyo.roam.searchfragment.SearchEntranceFragment;
 import com.example.xieyo.roam.searchfragment.SearchMainFragment;
 import com.example.xieyo.roam.searchfragment.SearchMusicAllFragment;
 import com.example.xieyo.roam.searchfragment.SearchMusicFragment;
 import com.example.xieyo.roam.searchfragment.SearchMusicPartFragment;
 import com.example.xieyo.roam.tools.DateBaseUtils;
-import com.example.xieyo.roam.tools.Music;
+import com.example.xieyo.roam.musicbean.Music;
 import com.example.xieyo.roam.view.NoScrollViewPager;
 
 import java.text.SimpleDateFormat;
@@ -68,6 +68,14 @@ public class SearchActivity extends BaseActivity implements SeekBar.OnSeekBarCha
         con=this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        LinearLayout backbutton = findViewById(R.id.back);
+
+        backbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         Initview();
     }
 
@@ -89,12 +97,12 @@ public class SearchActivity extends BaseActivity implements SeekBar.OnSeekBarCha
     {
         controlbarview.setVisibility(View.VISIBLE);
 
-        BaseInfo.Currentmusiclist.add(list);
+        MusicBaseInfo.Currentmusiclist.add(list);
         cbAdapter.notifyDataSetChanged();
         DateBaseUtils dateBaseUtils=new DateBaseUtils(con);
-        DateBaseUtils.SetMusicList(BaseInfo.Currentmusiclist);
+        DateBaseUtils.SetMusicList(MusicBaseInfo.Currentmusiclist);
         //Toast.makeText(this, title, Toast.LENGTH_SHORT).show();
-      //  initList(BaseInfo.Currentmusiclist);
+      //  initList(MusicBaseInfo.Currentmusiclist);
 
     }
     public static  void frenchview(int index)
@@ -132,21 +140,21 @@ public class SearchActivity extends BaseActivity implements SeekBar.OnSeekBarCha
 
 
         DateBaseUtils dateBaseUtils=new DateBaseUtils(this);
-        BaseInfo.Currentmusiclist=DateBaseUtils.getMusicList();
-        BaseInfo.CurrentMusicIndex=DateBaseUtils.getIndex();
-        initList(BaseInfo.Currentmusiclist);
+        MusicBaseInfo.Currentmusiclist=DateBaseUtils.getMusicList();
+        MusicBaseInfo.CurrentMusicIndex=DateBaseUtils.getIndex();
+        initList(MusicBaseInfo.Currentmusiclist);
 
 
         control_bar_paly_pause.setOnClickListener(this);
         control_bar_musiclsit.setOnClickListener(this);
 
-        cbAdapter=new BottomViewAdapter(R.layout.bottom_control_bar, BaseInfo.Currentmusiclist);
+        cbAdapter=new BottomViewAdapter(R.layout.bottom_control_bar, MusicBaseInfo.Currentmusiclist);
         cbAdapter.setOnItemClickListener(this);
 
         ry_control_bar=findViewById(R.id.ry_control_bar);
         ry_control_bar.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
         ry_control_bar.setAdapter(cbAdapter);
-        if (BaseInfo.Currentmusiclist.size()==0)
+        if (MusicBaseInfo.Currentmusiclist.size()==0)
         {
             controlbarview.setVisibility(View.GONE);
         }
@@ -154,11 +162,11 @@ public class SearchActivity extends BaseActivity implements SeekBar.OnSeekBarCha
         {
             controlbarview.setVisibility(View.VISIBLE);
             cbAdapter.notifyDataSetChanged();
-            ry_control_bar.scrollToPosition(BaseInfo.CurrentMusicIndex);
+            ry_control_bar.scrollToPosition(MusicBaseInfo.CurrentMusicIndex);
         }
         PagerSnapHelper helper = new PagerSnapHelper();
         helper.attachToRecyclerView(ry_control_bar);
-        ry_control_bar.scrollToPosition(BaseInfo.CurrentMusicIndex);
+        ry_control_bar.scrollToPosition(MusicBaseInfo.CurrentMusicIndex);
         ry_control_bar.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -181,7 +189,7 @@ public class SearchActivity extends BaseActivity implements SeekBar.OnSeekBarCha
                         intent.putExtra("flag", PlayService.FLAG_PLAY);
                         startService(intent);
                         DateBaseUtils.setIndex(first);
-                        BaseInfo.CurrentMusicIndex=first;
+                        MusicBaseInfo.CurrentMusicIndex=first;
                     }
                 }
 
@@ -223,9 +231,7 @@ public class SearchActivity extends BaseActivity implements SeekBar.OnSeekBarCha
     public void onClick(View v) {
 
         switch (v.getId()){
-            case R.id.local_back:
-                finish();
-                break;
+
             case R.id.iv_play_bar_playlist:
                 //
                 break;

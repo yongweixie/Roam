@@ -3,6 +3,8 @@ package com.example.xieyo.roam.tools;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.xieyo.roam.musicbean.Music;
+
 import java.util.ArrayList;
 import java.util.List;
 public class DateBaseUtils {
@@ -10,6 +12,54 @@ public class DateBaseUtils {
     public  DateBaseUtils(Context context)
     {
         con=context;
+    }
+    public static void setLoginState(boolean state)
+    {
+        SharedPreferences sharedPreferences=con.getSharedPreferences("LoginState", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor2 = sharedPreferences.edit();//获取编辑器
+        if(state==true)
+        {
+            editor2.putString("state","yes");
+        }
+        if(state==false)
+        {
+            editor2.putString("state","no");
+        }
+        editor2.commit();//提交修改
+
+    }
+    public static void setUserInfo(String phone)
+    {
+
+        SharedPreferences sharedPreferences=con.getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor2 = sharedPreferences.edit();//获取编辑器
+        editor2.putString("phone",phone);
+        editor2.commit();//提交修改
+
+
+    }
+    public static String getUserInfo()
+    {
+
+        SharedPreferences sharedPreferences=con.getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
+        String phone=sharedPreferences.getString("phone","");
+        return phone;
+
+    }
+    public static boolean getLoginState()
+    {
+        boolean flag=false;
+        SharedPreferences sharedPreferences=con.getSharedPreferences("LoginState", Context.MODE_PRIVATE);
+        String state=sharedPreferences.getString("state","");
+        if(state=="yes")
+        {
+            flag=true;
+        }
+        if(state=="no")
+        {
+            flag=false;
+        }
+        return  flag;
     }
     public static void SetMusicList(List<Music> list)
     {

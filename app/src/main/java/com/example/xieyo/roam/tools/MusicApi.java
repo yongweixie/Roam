@@ -2,7 +2,10 @@ package com.example.xieyo.roam.tools;
 
 import android.util.Log;
 
-import com.example.xieyo.roam.BaseInfo;
+import com.example.xieyo.roam.baseinfo.MusicBaseInfo;
+import com.example.xieyo.roam.musicbean.Music;
+import com.example.xieyo.roam.musicbean.MusicHallList;
+import com.example.xieyo.roam.musicbean.MusicList;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,7 +18,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -82,18 +84,20 @@ public class MusicApi {
         List<String> list=new ArrayList<String>();
         if (from==2)
         {
-            String path="https://api.bzqll.com/music/netease/songList?key=579621905&id=3778678&limit=10&offset=0";
-            String getData=getResult(path);
+            String path="https://music.163.com/discover/toplist?id=19723756";
+            //String getData=getResult(path);
             try {
-                JSONObject jsonObject = new JSONObject(getData);
+                Document doc=Jsoup.connect(path).get();
+               // JSONObject jsonObject = new JSONObject(getData);
+                Elements elements=doc.select("ul[class=\"f-hide\"]").select("li");
                 for (int i=0;i<10;i++)
                 {
-                    JSONObject object= jsonObject.getJSONObject("data").getJSONArray("songs").getJSONObject(i);
-                    list.add(object.getString("name"));
+                   // JSONObject object= jsonObject.getJSONObject("data").getJSONArray("songs").getJSONObject(i);
+                    list.add(elements.get(i).select("a").text());
 
                 }
 
-            } catch (JSONException e) {
+            } catch (Exception e) {
 
                 e.printStackTrace();
             }
@@ -103,7 +107,7 @@ public class MusicApi {
 
         return  list;
     }
-    public static MusicList getMusitListdata(String listID,int from)
+    public static MusicList getMusitListdata(String listID, int from)
     {
         MusicList ml=new MusicList();
         if (from==2)
@@ -195,16 +199,12 @@ public class MusicApi {
                 ml.desc=desc.text();
                 ml.userface="http://imge.kugou.com/kugouicon/165/20120724/20120724145917274529.jpg";
                 // System.out.println(user.text());
-                ml.playCount= BaseInfo.MusicListPlayCount;
+                ml.playCount= MusicBaseInfo.MusicListPlayCount;
 
 
                 // System.out.println(data.get(i).child(0).child(0).attr("alt"));
 
                 //  System.out.println(data.get(i).attr("title"));
-
-
-
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -214,17 +214,39 @@ public class MusicApi {
     public  static List<MusicHallList> getMusicList( int page,int count,int from)
     {
         musicListArrayList=new ArrayList<>();
-        String MusicListpath=new String();
         if (from==2)
         {
-            MusicListpath="https://api.bzqll.com/music/netease/hotSongList?key=579621905&cat=%E5%85%A8%E9%83%A8&limit="+count+"&offset="+(page-1)*count;;
-            pasingMusicList(getResult(MusicListpath),count,from);
+
+
+            try {
+
+                String url="https://music.163.com/discover/playlist/?order=hot&cat=%E5%85%A8%E9%83%A8&limit="+count+"&offset="+(page-1)*count;
+                Document doc = Jsoup.connect(url).get();
+                Elements elements= doc.select("div[class=\"u-cover u-cover-1\"]");
+                //Log.i("123456", "getMusicList: "+doc);
+
+                for(int i=0;i<count;i++)
+                {
+                    MusicHallList ml=new MusicHallList();
+                    //System.out.println(object.getString("dissname"));
+                    ml.imageUri=elements.get(i).select("img").attr("src").replaceAll("140y140","800y800");
+                    ml.playCount =elements.get(i).select("span[class=\"nb\"]").text();
+                    ml.id=elements.get(i).select("a[class=\"icon-play f-fr\"]").attr("data-res-id");
+                    ml.title=elements.get(i).select("a").get(0).attr("title");
+                    ml.from = 2;
+                    ml.type=2;
+                    musicListArrayList.add(ml);
+                }
+            }
+            catch (Exception e)
+            {
+                Log.i("123456", "getMusicList: "+e.toString());
+            }
+
 
         }
         if(from==1)
         {
-//            QQMusicListpath="https://api.bzqll.com/music/tencent/hotSongList?key=579621905&categoryId=10000000&sortId=3&limit="+count+"&offset="+(page-1)*count;
-//            pasingMusicList(getResult(QQMusicListpath),count,from);
             String url="https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg?picmid=" +
                     "1&inCharset=utf8&outCharset=utf-8&categoryId=10000000&sortId=5&sin="+(page-1)*count+"&ein="+(page*count-1);
             Matcher matcher= Pattern.compile("\\((.*)\\)").matcher(getQQResult(url));
@@ -239,7 +261,7 @@ public class MusicApi {
                         JSONObject object=jsonobject.getJSONObject("data").getJSONArray("list").getJSONObject(i);
                         //System.out.println(object.getString("dissname"));
                         ml.imageUri=object.getString("imgurl");
-                        ml.playCount = object.getString("listennum");
+                        ml.playCount = NumberUtils.amountConversion(Integer.valueOf(object.getString("listennum")));
                         ml.id=object.getString("dissid");
                         ml.title=object.getString("dissname");
                         ml.from = 1;
@@ -278,7 +300,6 @@ public class MusicApi {
                     mc.title=title.get(i).text();
                     mc.id=ID.get(i).child(0).attr("href").split("/")[5];
                     mc.playCount= NumberUtils.amountConversion(Integer.valueOf(playcount.get(i).text()));
-
                     mc.imageUri=pic.get(i).child(0).attr("_src");
                     musicListArrayList.add(mc);
                 }
@@ -319,10 +340,7 @@ public class MusicApi {
         }
         return  getLrctext;
     }
-    public static void pasingQQMusicList(String  message)
-    {
 
-    }
     public static String getQQResult(final String url){
         final StringBuilder sb = new StringBuilder();
         FutureTask<String> task = new FutureTask<String>(new Callable<String>() {
@@ -461,42 +479,7 @@ public class MusicApi {
             e.printStackTrace();
         }
     }
-    public static void pasingMusicList(String message,int count,int from)
-    {
-        JSONObject jsonObject = null;
-        try {
-            jsonObject = new JSONObject(message);
-            //通过key（text）获取value
-                    for (int i=0;i<count;i++)
-                    {
-                        JSONObject object= jsonObject.getJSONArray("data").getJSONObject(i);
-                        MusicHallList ml=new MusicHallList();
-                        ml.id = object.getString("id");
-                        if (from==1)
-                        {
-                            ml.title = object.getString("name");
-                            ml.imageUri = object.getString("pic");
-                        }
-                         if(from==2)
-                        {
-                            ml.title = object.getString("title");
-                            ml.imageUri = object.getString("coverImgUrl");
-                        }
 
-                       // ml.creator = object.getString("creator");
-                        ml.from=from;
-                        ml.playCount = NumberUtils.amountConversion(Integer.valueOf( object.getString("playCount"))) ;
-                        ml.type=2;
-                        musicListArrayList.add(ml);
-                    }
-
-            //getLrctext=lrctext;
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Log.i("123456", "pasingMusicList: "+e.toString());
-        }
-    }
     private static void pasingLrc(String message){
         JSONObject jsonObject = null;
         try {

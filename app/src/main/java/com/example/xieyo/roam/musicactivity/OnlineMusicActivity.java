@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
@@ -27,17 +29,19 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.xieyo.roam.BaseActivity;
-import com.example.xieyo.roam.BaseInfo;
+import com.example.xieyo.roam.baseinfo.MusicBaseInfo;
 import com.example.xieyo.roam.R;
 import com.example.xieyo.roam.MyAdapter.BottomViewAdapter;
 import com.example.xieyo.roam.MyAdapter.MusicListRecyclerAdapter;
-import com.example.xieyo.roam.Service.PlayService;
+import com.example.xieyo.roam.service.PlayService;
 import com.example.xieyo.roam.tools.DateBaseUtils;
-import com.example.xieyo.roam.tools.Music;
+import com.example.xieyo.roam.musicbean.Music;
 import com.example.xieyo.roam.tools.MusicApi;
-import com.example.xieyo.roam.tools.MusicList;
+import com.example.xieyo.roam.musicbean.MusicList;
 import com.example.xieyo.roam.view.MusicListDialog;
+import com.wang.avi.AVLoadingIndicatorView;
 
+import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -67,12 +71,18 @@ public class OnlineMusicActivity extends BaseActivity implements BaseQuickAdapte
     private LinearLayout headerbar;
     private MusicListDialog dialog;
     private String musiclistdesc=new String();
-
+    private static AVLoadingIndicatorView avi;
+    private static TextView songnum;
+    TextView tv_list_title;
+     TextView tv_playcount;
+     ImageView iv_userface;
+     TextView tv_username;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onlinemusic);
-        con=this;
-      //  InitToolBar();
+        con=getApplicationContext();
+
+        //  InitToolBar();
         initview();
 
         initReceiver();
@@ -97,12 +107,47 @@ public class OnlineMusicActivity extends BaseActivity implements BaseQuickAdapte
                 break;
         }
     }
+    private  final class Listndler extends Handler {
+        WeakReference<OnlineMusicActivity> mMainActivityWeakReference;
+
+        public Listndler(OnlineMusicActivity mainActivity) {
+            mMainActivityWeakReference = new WeakReference<>(mainActivity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            MusicList ml=(MusicList) msg.obj;
+            mAdapter.notifyDataSetChanged();
+            avi.hide();
+
+            mAdapter.loadMoreComplete();
+            RequestOptions options = new RequestOptions().placeholder(R.drawable.default_cover)
+                    .optionalTransform((new CircleCrop()))
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
+            DrawableCrossFadeFactory drawableCrossFadeFactory = new DrawableCrossFadeFactory.Builder(300).setCrossFadeEnabled(true).build();
+
+            Glide.with(getApplication()).load(ml.userface).apply(options)
+                    .transition(DrawableTransitionOptions.with(drawableCrossFadeFactory))
+                    .into(iv_userface);
+            tv_list_title.setText(MusicBaseInfo.MusicListTitle);
+            tv_playcount.setText(ml.playCount);
+            tv_username.setText(ml.creator);
+            songnum.setText("(共"+mList.size()+"首)");
+            musiclistdesc=ml.desc;
+
+        }
+    }
+    final OnlineMusicActivity.Listndler handler=new OnlineMusicActivity.Listndler(this);
+
     public void initview()
     {
-
+        avi=findViewById(R.id.loadingview);
+        avi.show();
         ry = (RecyclerView)findViewById(R.id.ry_onlinemusic_list);
         ry.setLayoutManager(new LinearLayoutManager(this));
-       // ry.addItemDecoration(new SpacesItemDecoration(4));
+
+        // ry.addItemDecoration(new SpacesItemDecoration(4));
 
         // 填充数据
         mAdapter = new MusicListRecyclerAdapter( mList);
@@ -112,48 +157,41 @@ public class OnlineMusicActivity extends BaseActivity implements BaseQuickAdapte
 
         ImageView iv_list_cover=headerscroolView.findViewById(R.id.iv_musiclist_cover);
         iv_list_cover.setOnClickListener(this);
-        final TextView tv_list_title=headerscroolView.findViewById(R.id.tv_musiclist_title);
-        final TextView tv_playcount=headerscroolView.findViewById(R.id.tv_playCount);
-        final ImageView iv_userface=headerscroolView.findViewById(R.id.iv_userface);
-        final TextView tv_username=headerscroolView.findViewById(R.id.tv_username);
+          tv_list_title=headerscroolView.findViewById(R.id.tv_musiclist_title);
+          tv_playcount=headerscroolView.findViewById(R.id.tv_playCount);
+          iv_userface=headerscroolView.findViewById(R.id.iv_userface);
+          tv_username=headerscroolView.findViewById(R.id.tv_username);
+        LinearLayout backbutton = findViewById(R.id.back);
+
+        backbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         RequestOptions options1 = new RequestOptions().placeholder(R.drawable.default_cover)
                 .optionalTransform(new RoundedCornersTransformation(15,0, RoundedCornersTransformation.CornerType.ALL))
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-        Glide.with(getApplication()).load(BaseInfo.MusicListImageUrl).apply(options1)
+        Glide.with(getApplication()).load(MusicBaseInfo.MusicListImageUrl).apply(options1)
                 .into(iv_list_cover);
-
-        new Thread(new Runnable() {
+        Runnable runnable = new Runnable(){
             @Override
             public void run() {
-                runOnUiThread(new Runnable() {
-                    MusicList ml=MusicApi.getMusitListdata(BaseInfo.MusicListId, BaseInfo.CurrentMusicListFrom);
-                    @Override
-                    public void run() {
-
-                        //background.setBackgroundDrawable(getForegroundDrawable(drawable));
-                        //background.setBackground(createBlurredImageFromBitmap(drawableToBitmap(drawable),3));
-
-                        RequestOptions options = new RequestOptions().placeholder(R.drawable.default_cover)
-                                .optionalTransform((new CircleCrop()))
-                                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
-                        DrawableCrossFadeFactory drawableCrossFadeFactory = new DrawableCrossFadeFactory.Builder(300).setCrossFadeEnabled(true).build();
-
-                        Glide.with(getApplication()).load(ml.userface).apply(options)
-                                .transition(DrawableTransitionOptions.with(drawableCrossFadeFactory))
-                                .into(iv_userface);
-                        tv_list_title.setText(BaseInfo.MusicListTitle);
-                        tv_playcount.setText(ml.playCount);
-                        tv_username.setText(ml.creator);
-                        musiclistdesc=ml.desc;
-
-                    }
-                });
+                // TODO: http request.
+                Message msg = new Message();
+                mList.addAll(MusicApi.getMusicfromList(MusicBaseInfo.MusicListId, MusicBaseInfo.CurrentMusicListFrom));
+                msg.obj=MusicApi.getMusitListdata(MusicBaseInfo.MusicListId, MusicBaseInfo.CurrentMusicListFrom);
+                handler.sendMessage(msg);
             }
-        }).start();
+        };
+        new Thread(runnable).start();
+
+
+
 
         View headerView=getLayoutInflater().inflate(R.layout.music_list_header_, null);
-
         headerView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+        songnum=headerView.findViewById(R.id.songnum);
 
         mAdapter.addHeaderView(headerView);
         final TextView tv_musiclistname=findViewById(R.id.musiclist_name);
@@ -190,7 +228,7 @@ public class OnlineMusicActivity extends BaseActivity implements BaseQuickAdapte
                 else if (mAlpha >= 255) {
                     //setViewBackgroundAlpha(headerbar, 0);
                     headerbar.setBackgroundColor(getResources().getColor(R.color.head_bottom_color));
-                    tv_musiclistname.setText(BaseInfo.MusicListTitle);
+                    tv_musiclistname.setText(MusicBaseInfo.MusicListTitle);
 
                 }
                 // 变化中状态：标题栏/导航栏随ScrollView 的滑动而产生相应变化
@@ -202,8 +240,7 @@ public class OnlineMusicActivity extends BaseActivity implements BaseQuickAdapte
             }
         });
 
-        music = MusicApi.getMusicfromList(BaseInfo.MusicListId,BaseInfo.CurrentMusicListFrom);
-        mList.addAll(music);
+
         processbar=findViewById(R.id.buttom_control_processbar);
 
         control_bar_paly_pause=findViewById(R.id.iv_play_bar_play);
@@ -212,21 +249,21 @@ public class OnlineMusicActivity extends BaseActivity implements BaseQuickAdapte
 
 
         DateBaseUtils dateBaseUtils=new DateBaseUtils(con);
-        BaseInfo.Currentmusiclist=DateBaseUtils.getMusicList();
-        BaseInfo.CurrentMusicIndex=DateBaseUtils.getIndex();
-        initList(BaseInfo.Currentmusiclist);
+        MusicBaseInfo.Currentmusiclist=DateBaseUtils.getMusicList();
+        MusicBaseInfo.CurrentMusicIndex=DateBaseUtils.getIndex();
+        initList(MusicBaseInfo.Currentmusiclist);
 
 
         control_bar_paly_pause.setOnClickListener(this);
         control_bar_musiclsit.setOnClickListener(this);
 
-        cbAdapter=new BottomViewAdapter(R.layout.bottom_control_bar, BaseInfo.Currentmusiclist);
+        cbAdapter=new BottomViewAdapter(R.layout.bottom_control_bar, MusicBaseInfo.Currentmusiclist);
         cbAdapter.setOnItemClickListener(this);
 
         ry_control_bar=findViewById(R.id.ry_control_bar);
         ry_control_bar.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
         ry_control_bar.setAdapter(cbAdapter);
-        if (BaseInfo.Currentmusiclist.size()==0)
+        if (MusicBaseInfo.Currentmusiclist.size()==0)
         {
             controlbarview.setVisibility(View.GONE);
         }
@@ -234,11 +271,11 @@ public class OnlineMusicActivity extends BaseActivity implements BaseQuickAdapte
         {
             controlbarview.setVisibility(View.VISIBLE);
             cbAdapter.notifyDataSetChanged();
-            ry_control_bar.scrollToPosition(BaseInfo.CurrentMusicIndex);
+            ry_control_bar.scrollToPosition(MusicBaseInfo.CurrentMusicIndex);
         }
         PagerSnapHelper helper = new PagerSnapHelper();
         helper.attachToRecyclerView(ry_control_bar);
-        ry_control_bar.scrollToPosition(BaseInfo.CurrentMusicIndex);
+        ry_control_bar.scrollToPosition(MusicBaseInfo.CurrentMusicIndex);
         ry_control_bar.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -261,7 +298,7 @@ public class OnlineMusicActivity extends BaseActivity implements BaseQuickAdapte
                         intent.putExtra("flag", PlayService.FLAG_PLAY);
                         startService(intent);
                         DateBaseUtils.setIndex(first);
-                        BaseInfo.CurrentMusicIndex=first;
+                        MusicBaseInfo.CurrentMusicIndex=first;
                     }
                 }
 
@@ -292,14 +329,14 @@ public class OnlineMusicActivity extends BaseActivity implements BaseQuickAdapte
         {
             controlbarview.setVisibility(View.VISIBLE);
 
-            BaseInfo.Currentmusiclist.clear();
-            BaseInfo.Currentmusiclist.addAll(mList);
+            MusicBaseInfo.Currentmusiclist.clear();
+            MusicBaseInfo.Currentmusiclist.addAll(mList);
             cbAdapter.notifyDataSetChanged();
             DateBaseUtils dateBaseUtils=new DateBaseUtils(con);
-            DateBaseUtils.SetMusicList(BaseInfo.Currentmusiclist);
+            DateBaseUtils.SetMusicList(MusicBaseInfo.Currentmusiclist);
             //Toast.makeText(this, title, Toast.LENGTH_SHORT).show();
-            initList(BaseInfo.Currentmusiclist);
-            int index=BaseInfo.Currentmusiclist.get(position).Musicindex;
+            initList(MusicBaseInfo.Currentmusiclist);
+            int index= MusicBaseInfo.Currentmusiclist.get(position).Musicindex;
             if (currentplayID!=index)
             {
                 Intent intent = new Intent(this, PlayService.class);
@@ -311,7 +348,7 @@ public class OnlineMusicActivity extends BaseActivity implements BaseQuickAdapte
             }
             currentplayID=index;
             DateBaseUtils.setIndex(index);
-            BaseInfo.CurrentMusicIndex=index;
+            MusicBaseInfo.CurrentMusicIndex=index;
         }
         if (adapter==cbAdapter)
         {
@@ -364,12 +401,10 @@ public class OnlineMusicActivity extends BaseActivity implements BaseQuickAdapte
     public void onClick(View v) {
 
         switch (v.getId()){
-            case R.id.local_back:
-                finish();
-                break;
+
             case R.id.iv_musiclist_cover:
                 //
-                showDialog(BaseInfo.MusicListTitle,BaseInfo.MusicListImageUrl,musiclistdesc);
+                showDialog(MusicBaseInfo.MusicListTitle, MusicBaseInfo.MusicListImageUrl,musiclistdesc);
                 break;
             case R.id.iv_play_bar_play:
                 startServicce(PlayService.FLAG_PlAY_PAUSE);

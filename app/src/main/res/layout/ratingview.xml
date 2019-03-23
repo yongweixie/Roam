@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="13dp"
+    android:orientation="horizontal">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:gravity="top"
+        android:textSize="10dp"
+        android:text="五星"
+        android:id="@+id/ratingstar"/>
+
+    <ProgressBar
+        android:id="@+id/process_star"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="80dp"
+        android:layout_height="6dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="0.5dp"
+        android:layout_marginStart="10dp"
+        android:max="100"
+        android:progress="10"
+        android:progressDrawable="@drawable/process_ratingview" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:gravity="top"
+        android:textSize="10dp"
+        android:text="五星"
+        android:id="@+id/percent"/>
+</LinearLayout>

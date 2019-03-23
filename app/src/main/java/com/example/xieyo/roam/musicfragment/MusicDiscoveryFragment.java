@@ -1,39 +1,19 @@
 package com.example.xieyo.roam.musicfragment;
 
 
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextPaint;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
-import com.cunoraz.tagview.Tag;
-import com.cunoraz.tagview.TagView;
 import com.example.xieyo.roam.LazyFragment;
 import com.example.xieyo.roam.MyAdapter.MainAdapter;
-import com.example.xieyo.roam.MyAdapter.MusicDiscoveryAdapter;
 import com.example.xieyo.roam.R;
-import com.example.xieyo.roam.fragment.MusicFragment;
-import com.example.xieyo.roam.musicactivity.SearchActivity;
-import com.example.xieyo.roam.searchfragment.SearchMusicAllFragment;
-import com.example.xieyo.roam.searchfragment.SearchMusicFragment;
-import com.example.xieyo.roam.searchfragment.SearchMusicPartFragment;
-import com.example.xieyo.roam.tools.Mv;
-import com.example.xieyo.roam.tools.VideoApi;
 import com.example.xieyo.roam.view.NoScrollViewPager;
-import com.example.xieyo.roam.view.SpacesItemDecoration;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-
-import cn.jzvd.Jzvd;
 
 
 public class MusicDiscoveryFragment  extends LazyFragment  {

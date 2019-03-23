@@ -21,17 +21,17 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.example.xieyo.roam.BaseInfo;
+import com.example.xieyo.roam.baseinfo.MusicBaseInfo;
 import com.example.xieyo.roam.R;
 import com.example.xieyo.roam.MyAdapter.BottomViewAdapter;
 import com.example.xieyo.roam.MyAdapter.ItemFragmentAdapter;
-import com.example.xieyo.roam.Service.PlayService;
+import com.example.xieyo.roam.service.PlayService;
 import com.example.xieyo.roam.musicfragment.MyMusicFragment;
 import com.example.xieyo.roam.musicfragment.MusicDiscoveryFragment;
 import com.example.xieyo.roam.musicfragment.MusicHallFragment;
 import com.example.xieyo.roam.musicactivity.MusicPlayActivity;
 import com.example.xieyo.roam.tools.DateBaseUtils;
-import com.example.xieyo.roam.tools.Music;
+import com.example.xieyo.roam.musicbean.Music;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,12 +55,12 @@ public class MusicFragment extends Fragment implements View.OnClickListener,Base
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view1 = inflater.inflate(R.layout.activity_music, container, false);
+        View view1 = inflater.inflate(R.layout.frag_music, container, false);
         con = getContext();
 //        DateBaseUtils dateBaseUtils=new DateBaseUtils(con);
-//        BaseInfo.Currentmusiclist.clear();
-//        BaseInfo.Currentmusiclist.addAll(DateBaseUtils.getMusicList());
-//        BaseInfo.CurrentMusicIndex=DateBaseUtils.getIndex();
+//        MusicBaseInfo.Currentmusiclist.clear();
+//        MusicBaseInfo.Currentmusiclist.addAll(DateBaseUtils.getMusicList());
+//        MusicBaseInfo.CurrentMusicIndex=DateBaseUtils.getIndex();
         viewpager = view1.findViewById(R.id.musicviewpager);
         tablayout2 = view1.findViewById(R.id.musictablayout);
         processbar=view1.findViewById(R.id.buttom_control_processbar);
@@ -75,15 +75,15 @@ public class MusicFragment extends Fragment implements View.OnClickListener,Base
        control_bar_musiclsit.setOnClickListener(this);
         control_bar_paly_pause.setOnClickListener(this);
 
-        if (BaseInfo.Currentmusiclist.size()==0)
+        if (MusicBaseInfo.Currentmusiclist.size()==0)
         {
             controlbarview.setVisibility(View.GONE);
         }
         else
         {
             controlbarview.setVisibility(View.VISIBLE);
-            initList(BaseInfo.Currentmusiclist);
-            ry_controlbar.scrollToPosition(BaseInfo.CurrentMusicIndex);
+            initList(MusicBaseInfo.Currentmusiclist);
+            ry_controlbar.scrollToPosition(MusicBaseInfo.CurrentMusicIndex);
         }
         cbAdapter.notifyDataSetChanged();
         return view1;
@@ -110,7 +110,7 @@ public class MusicFragment extends Fragment implements View.OnClickListener,Base
         viewpager.setAdapter(imAdapter);
         viewpager.setOffscreenPageLimit(2);
         tablayout2.setupWithViewPager(viewpager);
-        cbAdapter=new BottomViewAdapter(R.layout.bottom_control_bar,BaseInfo.Currentmusiclist);
+        cbAdapter=new BottomViewAdapter(R.layout.bottom_control_bar, MusicBaseInfo.Currentmusiclist);
 
         ry_controlbar.setLayoutManager(new LinearLayoutManager(con, LinearLayoutManager.HORIZONTAL,false));
         ry_controlbar.setAdapter(cbAdapter);
@@ -142,7 +142,7 @@ public class MusicFragment extends Fragment implements View.OnClickListener,Base
                         intent.putExtra("flag", PlayService.FLAG_PLAY);
                         con.startService(intent);
                         DateBaseUtils.setIndex(first);
-                        BaseInfo.CurrentMusicIndex=first;
+                        MusicBaseInfo.CurrentMusicIndex=first;
                     }
                 }
 
@@ -276,27 +276,27 @@ public class MusicFragment extends Fragment implements View.OnClickListener,Base
     public void onResume() {
         super.onResume();
         DateBaseUtils dateBaseUtils=new DateBaseUtils(con);
-        BaseInfo.Currentmusiclist.clear();
-        BaseInfo.Currentmusiclist.addAll(DateBaseUtils.getMusicList());
-        BaseInfo.CurrentMusicIndex=DateBaseUtils.getIndex();
-        if (BaseInfo.Currentmusiclist.size()==0)
+        MusicBaseInfo.Currentmusiclist.clear();
+        MusicBaseInfo.Currentmusiclist.addAll(DateBaseUtils.getMusicList());
+        MusicBaseInfo.CurrentMusicIndex=DateBaseUtils.getIndex();
+        if (MusicBaseInfo.Currentmusiclist.size()==0)
         {
             controlbarview.setVisibility(View.GONE);
         }
         else
         {
             controlbarview.setVisibility(View.VISIBLE);
-            cbAdapter=new BottomViewAdapter(R.layout.bottom_control_bar,BaseInfo.Currentmusiclist);
+            cbAdapter=new BottomViewAdapter(R.layout.bottom_control_bar, MusicBaseInfo.Currentmusiclist);
             cbAdapter.setOnItemClickListener(this);
 
             ry_controlbar.setLayoutManager(new LinearLayoutManager(con, LinearLayoutManager.HORIZONTAL,false));
             ry_controlbar.setAdapter(cbAdapter);
 
-            // ry_control_bar.scrollToPosition(BaseInfo.CurrentMusicIndex);
+            // ry_control_bar.scrollToPosition(MusicBaseInfo.CurrentMusicIndex);
         }
         cbAdapter.notifyDataSetChanged();
-        initList(BaseInfo.Currentmusiclist);
-        ry_controlbar.scrollToPosition(BaseInfo.CurrentMusicIndex);
+        initList(MusicBaseInfo.Currentmusiclist);
+        ry_controlbar.scrollToPosition(MusicBaseInfo.CurrentMusicIndex);
 
     }
 

@@ -4,7 +4,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 
@@ -12,9 +11,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.xieyo.roam.LazyFragment;
 import com.example.xieyo.roam.MyAdapter.MusicDiscoveryAdapter;
 import com.example.xieyo.roam.R;
-import com.example.xieyo.roam.searchfragment.SearchMusicAllFragment;
-import com.example.xieyo.roam.tools.MusicApi;
-import com.example.xieyo.roam.tools.Mv;
+import com.example.xieyo.roam.musicbean.Mv;
 import com.example.xieyo.roam.tools.VideoApi;
 import com.example.xieyo.roam.view.SpacesItemDecoration;
 
@@ -23,8 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.jzvd.Jzvd;
-
-import static com.example.xieyo.roam.musicactivity.SearchActivity.getSearchViewtext;
 
 public class MusicDiscoveryLatest extends LazyFragment implements BaseQuickAdapter.RequestLoadMoreListener{
     private RecyclerView ry;

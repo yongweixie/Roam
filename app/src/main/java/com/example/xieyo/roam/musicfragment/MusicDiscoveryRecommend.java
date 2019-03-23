@@ -11,8 +11,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.xieyo.roam.LazyFragment;
 import com.example.xieyo.roam.MyAdapter.MusicDiscoveryAdapter;
 import com.example.xieyo.roam.R;
-import com.example.xieyo.roam.searchfragment.SearchMusicAllFragment;
-import com.example.xieyo.roam.tools.Mv;
+import com.example.xieyo.roam.musicbean.Mv;
 import com.example.xieyo.roam.tools.VideoApi;
 import com.example.xieyo.roam.view.SpacesItemDecoration;
 

@@ -7,7 +7,7 @@
     <!-- 允许联网 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- 获取GSM（2g）、WCDMA（联通3g）等网络状态的信息 -->
     <!--<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />-->
     <!--&lt;!&ndash; 获取wifi网络状态的信息 &ndash;&gt;-->
@@ -30,23 +30,31 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:networkSecurityConfig="@xml/jz_network_security_config"
-        tools:ignore="GoogleAppIndexingWarning"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <provider
+            android:name="cn.bmob.v3.util.BmobContentProvider"
+            android:authorities="com.example.xieyo.roam.BmobContentProvider">
+        </provider>
 
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:screenOrientation="portrait">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity android:name=".launch.WelcomeActivity"
+            android:launchMode="singleTop">
+            <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
@@ -65,15 +73,82 @@
             android:name=".musicactivity.MusicListActivity"
             android:launchMode="singleTask" />
         <activity
+            android:name=".bookactivity.FindBookEntrance"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".bookactivity.NewBookAll"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".bookactivity.ConcernedBookAll"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".bookactivity.Douban250All"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".bookactivity.BookListbyTag"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".bookactivity.BookDataActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".bookactivity.BillboardActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".movieactivity.BillboardActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".bookactivity.BookSearch"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".movieactivity.MovieDataActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".movieactivity.FindMovieEntrance"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".movieactivity.MovieListbyTag"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".movieactivity.MovieSearch"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".movieactivity.GetIMDB"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".bookactivity.BookDigest"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".bookactivity.BookDigestList"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".movieactivity.MovieDigest"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".movieactivity.MovieDigestList"
+            android:launchMode="singleTask" />
+        <activity
+        android:name=".launch.LoginActivity"
+        android:launchMode="singleTask" />
+        <activity
+            android:name=".launch.RegisterActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".launch.StartActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".launch.SmsCodeActivity"
+            android:launchMode="singleTask" />
+        <activity
             android:name=".musicactivity.RecentMusicActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <!-- <provider -->
         <!-- android:name="cn.bmob.v3.util.BmobContentProvider" -->
         <!-- android:authorities="com.example.xieyo.roam.BmobContentProvider" /> -->
 
         <service
-            android:name=".Service.PlayService"
+            android:name=".service.PlayService"
             android:enabled="true"
             android:exported="true"></service>
     </application>

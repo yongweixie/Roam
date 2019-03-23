@@ -8,7 +8,7 @@ import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.xieyo.roam.R;
-import com.example.xieyo.roam.tools.Mv;
+import com.example.xieyo.roam.musicbean.Mv;
 
 import java.util.List;
 

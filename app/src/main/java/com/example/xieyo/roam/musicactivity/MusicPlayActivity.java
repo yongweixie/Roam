@@ -36,16 +36,16 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.example.xieyo.roam.BaseInfo;
+import com.example.xieyo.roam.baseinfo.MusicBaseInfo;
 import com.example.xieyo.roam.R;
-import com.example.xieyo.roam.Service.PlayService;
+import com.example.xieyo.roam.service.PlayService;
 import com.example.xieyo.roam.lyricview.Lrc;
 import com.example.xieyo.roam.lyricview.LrcHelper;
 import com.example.xieyo.roam.lyricview.LrcView;
 import com.example.xieyo.roam.view.CircleImageView;
 import com.example.xieyo.roam.tools.DisplayUtils;
 import com.example.xieyo.roam.tools.FastBlurUtil;
-import com.example.xieyo.roam.tools.Music;
+import com.example.xieyo.roam.musicbean.Music;
 import com.example.xieyo.roam.tools.MusicApi;
 
 import java.io.ByteArrayInputStream;
@@ -92,7 +92,7 @@ public class MusicPlayActivity  extends BaseMusicActivity implements SeekBar.OnS
         con=this;
         initView();
         initPointer();
-        initList(BaseInfo.Currentmusiclist);
+        initList(MusicBaseInfo.Currentmusiclist);
         initReceiver();
         initPageAdapter();
         initPointer();
@@ -202,7 +202,14 @@ public class MusicPlayActivity  extends BaseMusicActivity implements SeekBar.OnS
         play_pause=findViewById(R.id.iv_listen_play_pause);
         background=findViewById(R.id.listen_background);
 
+        LinearLayout backbutton = findViewById(R.id.back);
 
+        backbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         seekbar.setOnSeekBarChangeListener(this);
         //设置监听
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -410,14 +417,14 @@ public class MusicPlayActivity  extends BaseMusicActivity implements SeekBar.OnS
     public void previous(View view) {
         startServicce(PlayService.FLAG_PREVIOUS);
        // play_pause.setImageResource(R.drawable.icon_listen_pause);
-        BaseInfo.CurrentMusicIndex--;
+        MusicBaseInfo.CurrentMusicIndex--;
         civ.start();
     }
 
     // 下一曲
     public void next(View view) {
         startServicce(PlayService.FLAG_NEXT);
-        BaseInfo.CurrentMusicIndex++;
+        MusicBaseInfo.CurrentMusicIndex++;
         civ.start();
     }
     // 初始化广播接收器
@@ -547,10 +554,10 @@ public class MusicPlayActivity  extends BaseMusicActivity implements SeekBar.OnS
         public void onReceive(Context context, Intent intent) {
             //获取editor对象
             final int id=intent.getIntExtra("index", 0);
-            tv_title.setText(BaseInfo.Currentmusiclist.get(id).title);
-            tv_artist.setText("——   "+BaseInfo.Currentmusiclist.get(id).artist+"   ——");
+            tv_title.setText(MusicBaseInfo.Currentmusiclist.get(id).title);
+            tv_artist.setText("——   "+ MusicBaseInfo.Currentmusiclist.get(id).artist+"   ——");
             civ.setnewRotateDegrees();//旋转角度重新计算
-            civ.setCoverURL(BaseInfo.Currentmusiclist.get(id).musicbmpUri);
+            civ.setCoverURL(MusicBaseInfo.Currentmusiclist.get(id).musicbmpUri);
                Runnable runnable = new Runnable(){
                 @Override
                 public void run() {
@@ -560,16 +567,16 @@ public class MusicPlayActivity  extends BaseMusicActivity implements SeekBar.OnS
 
                     Message msg = new Message();
                    // Bundle data = new Bundle();
-                    if (BaseInfo.Currentmusiclist.get(id).musicid.equals("local"))
+                    if (MusicBaseInfo.Currentmusiclist.get(id).musicid.equals("local"))
                     {
-                       // data.putString("value",MusicApi.getLrc(BaseInfo.Currentmusiclist.get(id).title+BaseInfo.Currentmusiclist.get(id).artist));
-                        msg.obj= MusicApi.getLrc(BaseInfo.Currentmusiclist.get(id).title+BaseInfo.Currentmusiclist.get(id).artist);
+                       // data.putString("value",MusicApi.getLrc(MusicBaseInfo.Currentmusiclist.get(id).title+MusicBaseInfo.Currentmusiclist.get(id).artist));
+                        msg.obj= MusicApi.getLrc(MusicBaseInfo.Currentmusiclist.get(id).title+ MusicBaseInfo.Currentmusiclist.get(id).artist);
 
                     }
                     else
                     {
-                        //data.putString("value",MusicApi.getLrcbyID(BaseInfo.Currentmusiclist.get(id).musicid,BaseInfo.Currentmusiclist.get(id).from));
-                        msg.obj=MusicApi.getLrcbyID(BaseInfo.Currentmusiclist.get(id).musicid,BaseInfo.Currentmusiclist.get(id).from);
+                        //data.putString("value",MusicApi.getLrcbyID(MusicBaseInfo.Currentmusiclist.get(id).musicid,MusicBaseInfo.Currentmusiclist.get(id).from));
+                        msg.obj=MusicApi.getLrcbyID(MusicBaseInfo.Currentmusiclist.get(id).musicid, MusicBaseInfo.Currentmusiclist.get(id).from);
                         //Log.i("1234567889", "onReceive: "+msg.obj);
 
                     }
@@ -580,7 +587,7 @@ public class MusicPlayActivity  extends BaseMusicActivity implements SeekBar.OnS
             new Thread(runnable).start();
             // setBlurBackground(drawableToBitmap(MainActivity.mainmusiclist.get(id).albumbmp));
 
-            try2UpdateMusicUrlPicBackground(BaseInfo.Currentmusiclist.get(id).musicbmpUri);
+            try2UpdateMusicUrlPicBackground(MusicBaseInfo.Currentmusiclist.get(id).musicbmpUri);
 
 
 

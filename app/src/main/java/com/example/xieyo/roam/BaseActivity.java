@@ -18,10 +18,15 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 
+import com.example.xieyo.roam.baseinfo.BaseInfo;
+import com.example.xieyo.roam.launch.LoginActivity;
+import com.example.xieyo.roam.tools.DateBaseUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import cn.bmob.v3.Bmob;
 
 
 /**
@@ -35,8 +40,9 @@ public class BaseActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         ActivityCollector.addActivity(this);
-       // Bmob.initialize(this, "5027e730f0cb38e808583e897e871b00");
+        Bmob.initialize(this, "5027e730f0cb38e808583e897e871b00");
         initPremission();
+
 
         //getWindow().setFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN ,
         //        WindowManager.LayoutParams. FLAG_FULLSCREEN);
@@ -47,7 +53,8 @@ public class BaseActivity extends AppCompatActivity {
             decorView.setSystemUiVisibility(option);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
-
+        DateBaseUtils dateBaseUtils=new DateBaseUtils(this);
+        BaseInfo.account=DateBaseUtils.getUserInfo();
     }
 
     @Override
