@@ -20,6 +20,12 @@
             app:musicItem_icon="@drawable/item_music"
             app:musicItem_icon_color="@color/white"
             app:musicItem_name="本地歌曲" />
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.3dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/gray_light" />
 
         <com.example.xieyo.roam.view.MyMusicItemLayout
             android:id="@+id/favoriteview"

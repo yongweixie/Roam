@@ -70,7 +70,7 @@ public class MyMusicFragment extends Fragment  implements   BaseQuickAdapter.OnI
             }
         });
         MyMusicItemLayout fav = headView.findViewById(R.id.favoriteview);
-        local.setOnClickListener(new View.OnClickListener() {
+        fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(getActivity(), FavMusicActivity.class);
