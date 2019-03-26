@@ -357,7 +357,6 @@ public class MovieApi {
                 MovieDigestData bf = new MovieDigestData();
                 bf.content=elements2.get(i).select("a[title=\"查看本句\"]").text();
                 bf.from=elements2.get(i).select("div[class=\"xqjulistwafo\"]").text();
-                Log.i("123456", "getListbySearch: "+ bf.content);
                 blist.add(bf);
             }
             // System.out.println(booklist.get(0).attr("artist"));

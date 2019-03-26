@@ -51,7 +51,7 @@ public class LoginActivity extends BaseActivity {
 
                 final User user = new User();
                 //此处替换为你的用户名
-                user.setMobilePhoneNumber(account);
+                user.setUsername("user"+account);
                 //此处替换为你的密码
                 user.setPassword(password);
                 user.login(new SaveListener<User>() {
@@ -61,11 +61,13 @@ public class LoginActivity extends BaseActivity {
                             DateBaseUtils dateBaseUtils=new DateBaseUtils(LoginActivity.this);
                             DateBaseUtils.setLoginState(true);
                             DateBaseUtils.setUserInfo(account);
+                            finish();
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                           //  Snackbar.make(view, "登录成功：" + user.getUsername(), Snackbar.LENGTH_LONG).show();
                         } else {
                           //  Snackbar.make(view, "登录失败：" + e.getMessage(), Snackbar.LENGTH_LONG).show();
+                            Toast.makeText(getApplication(), e.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
                 });

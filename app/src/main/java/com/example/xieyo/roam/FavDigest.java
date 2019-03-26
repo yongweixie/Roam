@@ -1,5 +1,6 @@
-package com.example.xieyo.roam.bookactivity;
+package com.example.xieyo.roam;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.Bundle;
@@ -15,17 +16,19 @@ import android.widget.Toast;
 
 import com.baoyz.actionsheet.ActionSheet;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.example.xieyo.roam.BaseActivity;
-import com.example.xieyo.roam.baseinfo.BookBaseInfo;
-import com.example.xieyo.roam.baseinfo.MovieBaseInfo;
 import com.example.xieyo.roam.MyAdapter.BookDigestAdapter;
-import com.example.xieyo.roam.R;
-import com.example.xieyo.roam.movieactivity.MovieDigestList;
+import com.example.xieyo.roam.baseinfo.BaseInfo;
+import com.example.xieyo.roam.baseinfo.BookBaseInfo;
+import com.example.xieyo.roam.bookactivity.BookDigestList;
+import com.example.xieyo.roam.bookbean.BookDigestData;
+import com.example.xieyo.roam.musicbean.FavList;
+import com.example.xieyo.roam.musicbean.Music;
 import com.example.xieyo.roam.tools.BmobApi;
 import com.example.xieyo.roam.tools.BookApi;
 import com.example.xieyo.roam.view.SpacesItemDecoration;
 import com.wang.avi.AVLoadingIndicatorView;
-import com.example.xieyo.roam.bookbean.BookDigestData;
+
+import org.json.JSONArray;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -34,23 +37,29 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookDigestList extends BaseActivity implements BaseQuickAdapter.OnItemClickListener,BaseQuickAdapter.RequestLoadMoreListener,BaseQuickAdapter.OnItemLongClickListener,ActionSheet.ActionSheetListener{
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.QueryListener;
+
+public class FavDigest extends BaseActivity implements BaseQuickAdapter.OnItemClickListener,BaseQuickAdapter.OnItemLongClickListener,ActionSheet.ActionSheetListener{
     private RecyclerView ry;
     private static BookDigestAdapter mAdapter;
     private static List<BookDigestData> bList=new ArrayList<>();
     private static AVLoadingIndicatorView avi;
-    private static  int page =0;
     private static TextView headertext;
-    private View  mview ;
+    private View mview ;
     private String  mtext ;
-
+    private String extar_data;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_digest_list);
+                Intent intent = getIntent();
+        extar_data = intent.getStringExtra("extra_data");
+
         avi=findViewById(R.id.loadingview);
         avi.show();
         headertext=findViewById(R.id.header_text);
-        headertext.setText("全部书摘");
+        headertext.setText("我的收藏");
         LinearLayout backbutton = findViewById(R.id.back);
 
 
@@ -66,77 +75,44 @@ public class BookDigestList extends BaseActivity implements BaseQuickAdapter.OnI
         ry.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
         ry.addItemDecoration(new SpacesItemDecoration(10));
         ry.setAdapter(mAdapter);
-        mAdapter.setOnLoadMoreListener(new BookDigestList(),ry);
         mAdapter.setOnItemLongClickListener(this);
-        Runnable runnable = new Runnable(){
+
+
+
+        BmobQuery query = new BmobQuery("u" + BaseInfo.account);
+        query.addWhereEqualTo("type", extar_data);
+        query.setLimit(500);
+        query.order("createdAt");
+        //v3.5.0版本提供`findObjectsByTable`方法查询自定义表名的数据
+        query.findObjectsByTable(new QueryListener<JSONArray>() {
             @Override
-            public void run() {
-                // TODO: http request.
-                Message msg = new Message();
-                bList.addAll(BookApi.getDigestList(BookBaseInfo.booklink,page));
-                handler.sendMessage(msg);
+            public void done(JSONArray ary, BmobException e) {
+                if (e == null) {
+
+                    //Log.i("123456", "done: "+ary.toString());
+                    try {
+                        for (int i = 0; i < ary.length(); i++) {
+                            BookDigestData bl = new BookDigestData();
+                            String get = ary.getJSONObject(i).getString("data");
+                            //  BmobApi.UpLoadData(bmc.artist+"@_@"+bmc.title+"@_@"+bmc.musicbmpUri+"@_@"+bmc.path+"@_@"+bmc.musicid+"@_@"+bmc.from,"music");
+                            bl.content=get.split("@_@")[0];
+                            bl.from=get.split("@_@")[1];
+                            bList.add(bl);
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    } catch (Exception ex) {
+
+                        Log.i("123456", "done: "+ex.toString());
+
+                    }
+
+                } else {
+
+                }
             }
-        };
-        new Thread(runnable).start();
+        });
+        avi.hide();
     }
-
-    private static final class Listndler extends Handler {
-        WeakReference<BookDigestList> mMainActivityWeakReference;
-
-        public Listndler(BookDigestList mainActivity) {
-            mMainActivityWeakReference = new WeakReference<>(mainActivity);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            avi.hide();
-            mAdapter.notifyDataSetChanged();
-        }
-    }
-    final static BookDigestList.Listndler handler=new BookDigestList.Listndler(new BookDigestList());
-
-    private static final class Listndler2 extends Handler {
-        WeakReference<BookDigestList> mMainActivityWeakReference;
-
-        public Listndler2(BookDigestList mainActivity) {
-            mMainActivityWeakReference = new WeakReference<>(mainActivity);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            mAdapter.notifyDataSetChanged();
-            mAdapter.loadMoreComplete();
-            if(msg.arg1==-1)
-            {
-                mAdapter.loadMoreEnd();
-            }
-        }
-    }
-    final static BookDigestList.Listndler2 handler2=new BookDigestList.Listndler2(new BookDigestList());
-
-    @Override
-    public void onLoadMoreRequested() {
-
-        Runnable runnable = new Runnable(){
-            @Override
-            public void run() {
-                // TODO: http request.
-                //Bundle data = new Bundle();
-                page++;
-                Message msg = new Message();
-                //bList.addAll(BookApi.getDigestList(BookBaseInfo.booklink,page));
-                List<BookDigestData> getList= BookApi.getDigestList(BookBaseInfo.booklink,page);
-                bList.addAll(getList);
-                if (getList.size()<10)
-                    msg.arg1=-1;
-                handler2.sendMessage(msg);
-            }
-        };
-        new Thread(runnable).start();
-    }
-
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         //Toast.makeText(getActivity(), bList.get(position).booklink, Toast.LENGTH_LONG).show();
 
@@ -149,7 +125,7 @@ public class BookDigestList extends BaseActivity implements BaseQuickAdapter.OnI
                 .setCancelableOnTouchOutside(true)
                 .setListener(this).show();
         mview=view;
-        mtext=bList.get(position).content+"@_@"+bList.get(position).from;
+        mtext=bList.get(position).content;
         return false;
     }
     @Override
@@ -163,7 +139,7 @@ public class BookDigestList extends BaseActivity implements BaseQuickAdapter.OnI
         if(index==1)
         {
             BmobApi.UpLoadData(mtext,"zhaichao");
-            Toast.makeText(BookDigestList.this, "收藏成功",Toast.LENGTH_LONG).show();
+            Toast.makeText(FavDigest.this, "收藏成功",Toast.LENGTH_LONG).show();
         }
     }
     public void saveBitmap(View view, String filePath) {
@@ -210,12 +186,11 @@ public class BookDigestList extends BaseActivity implements BaseQuickAdapter.OnI
 
     @Override
     public void onDismiss(ActionSheet actionSheet, boolean isCancle) {
-       // Toast.makeText(getApplicationContext(), "dismissed isCancle = " + isCancle, 0).show();
+        // Toast.makeText(getApplicationContext(), "dismissed isCancle = " + isCancle, 0).show();
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
         bList.clear();
-        page=0;
     }
 }

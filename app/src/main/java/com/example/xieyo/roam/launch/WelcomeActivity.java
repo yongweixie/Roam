@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,13 +49,14 @@ public class WelcomeActivity extends BaseActivity {
                 DateBaseUtils dateBaseUtils=new DateBaseUtils(WelcomeActivity.this);
                if(DateBaseUtils.getLoginState())
                {
+
                    Intent intent=new Intent(WelcomeActivity.this,MainActivity.class);
                    startActivity(intent);
                    WelcomeActivity.this.finish();
                }
                else
                {
-                   Intent intent=new Intent(WelcomeActivity.this,MainActivity.class);
+                   Intent intent=new Intent(WelcomeActivity.this,StartActivity.class);
                    startActivity(intent);
                    WelcomeActivity.this.finish();
                }

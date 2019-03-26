@@ -43,6 +43,7 @@ public class MusicApi {
         if(from==1)
         {
              QQMusicListpath="https://api.bzqll.com/music/tencent/songList?key=579621905&id="+ID;
+
             pasingMusicFromList(getResult(QQMusicListpath),from);
         }
         if (from==2)

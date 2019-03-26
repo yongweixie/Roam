@@ -33,20 +33,23 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.xieyo.roam.baseinfo.MusicBaseInfo;
 import com.example.xieyo.roam.R;
+import com.example.xieyo.roam.movieactivity.MovieDigestList;
 import com.example.xieyo.roam.service.PlayService;
 import com.example.xieyo.roam.lyricview.Lrc;
 import com.example.xieyo.roam.lyricview.LrcHelper;
 import com.example.xieyo.roam.lyricview.LrcView;
-import com.example.xieyo.roam.view.CircleImageView;
+import com.example.xieyo.roam.tools.BmobApi;
 import com.example.xieyo.roam.tools.DisplayUtils;
 import com.example.xieyo.roam.tools.FastBlurUtil;
 import com.example.xieyo.roam.musicbean.Music;
 import com.example.xieyo.roam.tools.MusicApi;
+import com.example.xieyo.roam.view.CircleRotatingImageView;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -68,17 +71,17 @@ public class MusicPlayActivity  extends BaseMusicActivity implements SeekBar.OnS
     //包裹点点的LinearLayout
     private ViewGroup group;
     private LinearLayout background;
-    private ImageView imageView;
+    private ImageView imageView,iv_listen_favourite;
     private ImageView play_pause;
     //定义一个ImageVIew数组，来存放生成的小园点
     private ImageView[] imageViews;
     private  TextView tv_title,tv_current_time,tv_max_time,tv_artist;
     private  SeekBar seekbar;
     private  static SimpleDateFormat format;
-    private static CircleImageView civ;
+    private static CircleRotatingImageView civ;
     private static LrcView lrcview,singlelinelrc;
     private static Context con;
-
+    private static int bmobid=0;
     MusicPlayActivity.MusicIdReceiver idReceiver;
     MusicPlayActivity.MaxReceiver maxReceiver;
     MusicPlayActivity.ProgressReceiver receiver;
@@ -201,7 +204,7 @@ public class MusicPlayActivity  extends BaseMusicActivity implements SeekBar.OnS
         seekbar=findViewById(R.id.listen_seekbar);
         play_pause=findViewById(R.id.iv_listen_play_pause);
         background=findViewById(R.id.listen_background);
-
+        iv_listen_favourite=findViewById(R.id.iv_listen_favourite);
         LinearLayout backbutton = findViewById(R.id.back);
 
         backbutton.setOnClickListener(new View.OnClickListener() {
@@ -420,7 +423,21 @@ public class MusicPlayActivity  extends BaseMusicActivity implements SeekBar.OnS
         MusicBaseInfo.CurrentMusicIndex--;
         civ.start();
     }
+    public void addtofav(View view) {
+       // BmobApi.UpLoadData();
+        if(!MusicBaseInfo.Currentmusiclist.get(bmobid).musicid.equals("local"))
+        {
+            Music bmc=MusicBaseInfo.Currentmusiclist.get(bmobid);
+            BmobApi.UpLoadData(bmc.artist+"@_@"+bmc.title+"@_@"+bmc.musicbmpUri+"@_@"+bmc.path+"@_@"+bmc.musicid+"@_@"+bmc.from,"music");
+            Toast.makeText(MusicPlayActivity.this, "收藏成功",Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            Toast.makeText(MusicPlayActivity.this, "本地歌曲，无需收藏",Toast.LENGTH_LONG).show();
 
+        }
+
+    }
     // 下一曲
     public void next(View view) {
         startServicce(PlayService.FLAG_NEXT);
@@ -554,6 +571,7 @@ public class MusicPlayActivity  extends BaseMusicActivity implements SeekBar.OnS
         public void onReceive(Context context, Intent intent) {
             //获取editor对象
             final int id=intent.getIntExtra("index", 0);
+            bmobid=id;
             tv_title.setText(MusicBaseInfo.Currentmusiclist.get(id).title);
             tv_artist.setText("——   "+ MusicBaseInfo.Currentmusiclist.get(id).artist+"   ——");
             civ.setnewRotateDegrees();//旋转角度重新计算

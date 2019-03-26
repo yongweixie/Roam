@@ -43,6 +43,7 @@ public class RegisterActivity extends BaseActivity {
                         }
                     }
                 });
+                finish();
                 Intent intent = new Intent(RegisterActivity.this, SmsCodeActivity.class);
                 intent.putExtra("extra_data1", account);
                 intent.putExtra("extra_data2", password);

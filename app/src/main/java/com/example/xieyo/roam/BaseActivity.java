@@ -40,7 +40,7 @@ public class BaseActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         ActivityCollector.addActivity(this);
-        Bmob.initialize(this, "5027e730f0cb38e808583e897e871b00");
+        Bmob.initialize(this, "fd5ce556d0d0274403232f6da52c8e13");
         initPremission();
 
 

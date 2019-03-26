@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -25,6 +26,7 @@ import com.example.xieyo.roam.MyAdapter.RatingviewAdapter;
 import com.example.xieyo.roam.R;
 import com.example.xieyo.roam.bookbean.BookData;
 import com.example.xieyo.roam.bookbean.BookFragList;
+import com.example.xieyo.roam.tools.BmobApi;
 import com.example.xieyo.roam.tools.BookApi;
 import com.example.xieyo.roam.tools.ratingview;
 import com.example.xieyo.roam.view.SpacesItemDecoration;
@@ -53,7 +55,7 @@ public class BookDataActivity extends BaseActivity  implements BaseQuickAdapter.
     private static TextView nostar;
     private static String nostartext = "";
     private static Context con;
-
+    private static String bmobtext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +68,15 @@ public class BookDataActivity extends BaseActivity  implements BaseQuickAdapter.
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        TextView fav=findViewById(R.id.fav);
+        fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BmobApi.UpLoadData(bmobtext,"book");
+                Toast.makeText(BookDataActivity.this, "收藏成功",Toast.LENGTH_LONG).show();
+
             }
         });
 
@@ -181,6 +192,7 @@ public class BookDataActivity extends BaseActivity  implements BaseQuickAdapter.
             book_page.setText("页数："+mbookdata.page);
             book_translator.setText("译者："+mbookdata.translator);
             book_pubdate.setText("出版年："+mbookdata.pubdate);
+            bmobtext=mbookdata.bookname+"@_@"+mbookdata.coveruri+"@_@"+BookBaseInfo.booklink;
             mAdapter.notifyDataSetChanged();
             mAdapter2.notifyDataSetChanged();
         }

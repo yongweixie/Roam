@@ -67,6 +67,15 @@
             android:name=".musicactivity.OnlineMusicActivity"
             android:launchMode="singleTask" />
         <activity
+            android:name=".musicactivity.FavMusicActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".FavDigest"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".FavMusic_Movie"
+            android:launchMode="singleTask" />
+        <activity
             android:name=".musicactivity.SearchActivity"
             android:launchMode="singleTask" />
         <activity

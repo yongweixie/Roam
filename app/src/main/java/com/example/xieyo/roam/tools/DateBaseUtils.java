@@ -51,11 +51,11 @@ public class DateBaseUtils {
         boolean flag=false;
         SharedPreferences sharedPreferences=con.getSharedPreferences("LoginState", Context.MODE_PRIVATE);
         String state=sharedPreferences.getString("state","");
-        if(state=="yes")
+        if(state.equals("yes"))
         {
             flag=true;
         }
-        if(state=="no")
+        if(state.equals("no"))
         {
             flag=false;
         }

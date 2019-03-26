@@ -21,6 +21,7 @@ public class MainAdapter extends FragmentPagerAdapter {
         super(fm);
         this.list = list;
         this.title = title;
+
     }
 
 

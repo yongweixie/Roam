@@ -32,9 +32,9 @@ public class StartActivity extends BaseActivity {
         Buttonregister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finish();
                 Intent intent = new Intent(StartActivity.this, RegisterActivity.class);
                 startActivity(intent);
-               finish();
             }
         });
     }

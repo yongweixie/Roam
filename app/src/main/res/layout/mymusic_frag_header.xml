@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ratingview_corner_background"
+        android:orientation="vertical">
+
+        <com.example.xieyo.roam.view.MyMusicItemLayout
+            android:id="@+id/localview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:musicItem_desc=">"
+            app:musicItem_icon="@drawable/item_music"
+            app:musicItem_icon_color="@color/white"
+            app:musicItem_name="本地歌曲" />
+
+        <com.example.xieyo.roam.view.MyMusicItemLayout
+            android:id="@+id/favoriteview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:musicItem_desc=">"
+            app:musicItem_icon="@drawable/item_favorite"
+            app:musicItem_icon_color="@color/white"
+            app:musicItem_name="我的收藏" />
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="收藏的歌单"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/white"
+        android:textSize="16dp" />
+
+</LinearLayout>

@@ -1,6 +1,7 @@
 package com.example.xieyo.roam.MyAdapter;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;

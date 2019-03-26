@@ -51,10 +51,9 @@
                         android:id="@+id/movie_cover"  />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:orientation="vertical">
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -66,75 +65,70 @@
                             android:textColor="@color/white"
                             android:textSize="20dp"
                             android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="5dp"
-                            android:text="郑晨"
-                            android:id="@+id/movie_auther"
-
-                            android:textColor="@color/white"
-                            android:textSize="11dp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="5dp"
-                            android:singleLine="true"
-                            android:text="郑晨"
-                            android:id="@+id/movie_cast"
-                            android:textColor="@color/white"
-                            android:textSize="10dp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="5dp"
-                            android:text="郑晨"
-                            android:id="@+id/movie_pubdate"
-                            android:textColor="@color/white"
-                            android:textSize="10dp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="5dp"
-                            android:text="郑晨"
-                            android:id="@+id/movie_longtime"
-                            android:textColor="@color/white"
-                            android:textSize="10dp" />
                         <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:orientation="horizontal">
+                            <LinearLayout
+                                android:layout_width="160dp"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginTop="5dp"
+                                    android:text="郑晨"
+                                    android:id="@+id/movie_auther"
+
+                                    android:textColor="@color/white"
+                                    android:textSize="11dp" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginTop="5dp"
+                                    android:singleLine="true"
+                                    android:text="郑晨"
+                                    android:id="@+id/movie_cast"
+                                    android:textColor="@color/white"
+                                    android:textSize="10dp" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginTop="5dp"
+                                    android:text="郑晨"
+                                    android:id="@+id/movie_pubdate"
+                                    android:textColor="@color/white"
+                                    android:textSize="10dp" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginTop="5dp"
+                                    android:text="郑晨"
+                                    android:id="@+id/movie_longtime"
+                                    android:textColor="@color/white"
+                                    android:textSize="10dp" />
+                            </LinearLayout>
 
                             <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="60dp"
+                                android:layout_height="40dp"
                                 android:layout_marginStart="10dp"
-                                android:text="在看"
+                                android:layout_gravity="center"
+                                android:id="@+id/fav"
+                                android:gravity="center"
+                                android:layout_marginEnd="15dp"
+                                android:background="@drawable/ratingview_corner_background"
+                                android:text="收藏+"
                                 android:textColor="@color/white"
                                 android:textSize="14dp" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="20dp"
-                                android:text="想看"
-                                android:textColor="@color/white"
-                                android:textSize="14dp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="20dp"
-                                android:text="看过"
-                                android:textColor="@color/white"
-                                android:textSize="14dp" />
                         </LinearLayout>
+
+
                     </LinearLayout>
                 </LinearLayout>
 

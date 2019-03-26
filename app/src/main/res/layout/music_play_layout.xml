@@ -17,12 +17,10 @@
 
 
         <LinearLayout
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:id="@+id/back"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             >
             <ImageView
                 android:layout_width="25dp"
@@ -32,9 +30,9 @@
         </LinearLayout>
         <TextView
             android:id="@+id/listen_title_tv"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
             android:text="告白气球"
@@ -198,6 +196,8 @@
                 android:id="@+id/iv_listen_favourite"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
+                android:clickable="true"
+                android:onClick="addtofav"
                 android:src="@drawable/icon_listen_isfavorite" />
         </LinearLayout>
         <LinearLayout

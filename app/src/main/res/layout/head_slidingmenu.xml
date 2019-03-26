@@ -2,31 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="180dp"
-    android:background="@drawable/slidingmenu_background">
-    <ImageView
-        android:id="@+id/person"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
-        android:layout_marginTop="42dp"
-        android:layout_marginLeft="10dp"
+    android:layout_height="160dp">
 
-        android:src="@drawable/useravatar"/>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/useravatar"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/useravatar" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="15sp"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:textColor="@color/gray_black"
-        android:text="沐风"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginTop="12dp"
-        android:textColor="@color/gray_black"
-        android:layout_marginLeft="10dp"
-        android:text="人生像一场没有尽头的旅行."/>
-
+        android:layout_marginStart="20dp"
+        android:textColor="@color/white"
+        android:text="谢永威"/>
 </LinearLayout>

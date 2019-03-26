@@ -5,7 +5,7 @@
         <attr name="musicItem_desc" format="reference|string" />
         <attr name="musicItem_icon_color" format="reference|color" />
     </declare-styleable>
-    <declare-styleable name="CircleImageView">
+    <declare-styleable name="CircleRotatingImageView">
         <attr name="cover"  format="integer"/>
     </declare-styleable>
 

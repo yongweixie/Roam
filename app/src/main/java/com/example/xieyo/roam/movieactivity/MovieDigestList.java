@@ -26,6 +26,7 @@ import com.example.xieyo.roam.MyAdapter.MovieDigestAdapter;
 import com.example.xieyo.roam.R;
 import com.example.xieyo.roam.bookactivity.BookDigestList;
 import com.example.xieyo.roam.moviebean.MovieDigestData;
+import com.example.xieyo.roam.tools.BmobApi;
 import com.example.xieyo.roam.tools.MovieApi;
 import com.example.xieyo.roam.view.SpacesItemDecoration;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -54,7 +55,7 @@ public class MovieDigestList extends BaseActivity implements BaseQuickAdapter.On
         avi=findViewById(R.id.loadingview);
         avi.show();
         headertext=findViewById(R.id.header_text);
-        headertext.setText("全部书摘");
+        headertext.setText("全部台词");
         LinearLayout backbutton = findViewById(R.id.back);
 
 
@@ -155,7 +156,7 @@ public class MovieDigestList extends BaseActivity implements BaseQuickAdapter.On
                 .setCancelableOnTouchOutside(true)
                 .setListener(this).show();
         mview=view;
-        mtext=bList.get(position).content.substring(0,5);
+        mtext=bList.get(position).content+"@_@"+bList.get(position).from;
         return false;
     }
     @Override
@@ -163,8 +164,13 @@ public class MovieDigestList extends BaseActivity implements BaseQuickAdapter.On
 
         if(index==0)
         {
-            String path="/storage/emulated/0/Roam/Movie/"+mtext+".png";
+            String path="/storage/emulated/0/Roam/Movie/"+mtext.substring(0,5)+".png";
             saveBitmap(mview,path);
+        }
+        if (index==1)
+        {
+            BmobApi.UpLoadData(mtext,"taici");
+            Toast.makeText(MovieDigestList.this, "收藏成功",Toast.LENGTH_LONG).show();
         }
     }
     public void saveBitmap(View view, String filePath) {
@@ -242,5 +248,6 @@ public class MovieDigestList extends BaseActivity implements BaseQuickAdapter.On
     protected void onDestroy() {
         super.onDestroy();
         bList.clear();
+        page=0;
     }
 }

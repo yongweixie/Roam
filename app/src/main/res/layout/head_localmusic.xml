@@ -29,7 +29,7 @@
         android:layout_margin="15dp"
         android:layout_weight="1"
         android:layout_gravity="center"
-        android:text=" 本地音乐"
+        android:text=" 全部音乐"
         android:textSize="18dp"
         android:textColor="@color/white" />
 

@@ -43,7 +43,7 @@
         </LinearLayout>
 
     </LinearLayout>
-    <com.example.xieyo.roam.view.CircleImageView
+    <com.example.xieyo.roam.view.CircleRotatingImageView
         android:id="@+id/circle_image"
         android:layout_width="320dp"
         android:layout_gravity="center"

@@ -21,7 +21,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.xieyo.roam.R;
 
-public class CircleImageView extends View {
+public class CircleRotatingImageView extends View {
     private static final long ROTATE_DELAY = 5;//旋转动作时间
     private float mRotateDegrees;//旋转的角度
     private Handler mRotate;
@@ -122,17 +122,17 @@ public class CircleImageView extends View {
         loadImage(imageUrl);
     }
 
-    public CircleImageView(Context context) {
+    public CircleRotatingImageView(Context context) {
         super(context);
         init(context, null);
     }
 
-    public CircleImageView(Context context, AttributeSet attrs) {
+    public CircleRotatingImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public CircleImageView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CircleRotatingImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
@@ -145,8 +145,8 @@ public class CircleImageView extends View {
      */
     private void init(Context context, AttributeSet attrs) {
         setWillNotDraw(false);
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView);
-        Drawable mDrawableCover = a.getDrawable(R.styleable.CircleImageView_cover);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircleRotatingImageView);
+        Drawable mDrawableCover = a.getDrawable(R.styleable.CircleRotatingImageView_cover);
         if (mDrawableCover != null) {
             mBitmapCover = drawableToBitmap(mDrawableCover);
         }

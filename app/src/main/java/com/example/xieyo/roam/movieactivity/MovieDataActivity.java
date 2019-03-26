@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -23,8 +24,10 @@ import com.example.xieyo.roam.baseinfo.MovieBaseInfo;
 import com.example.xieyo.roam.MyAdapter.MovieFragAdapter;
 import com.example.xieyo.roam.MyAdapter.RatingviewAdapter;
 import com.example.xieyo.roam.R;
+import com.example.xieyo.roam.bookactivity.BookDigestList;
 import com.example.xieyo.roam.moviebean.MovieData;
 import com.example.xieyo.roam.moviebean.MovieFragList;
+import com.example.xieyo.roam.tools.BmobApi;
 import com.example.xieyo.roam.tools.MovieApi;
 import com.example.xieyo.roam.tools.ratingview;
 import com.example.xieyo.roam.view.SpacesItemDecoration;
@@ -52,7 +55,7 @@ public class MovieDataActivity extends BaseActivity implements BaseQuickAdapter.
     private static TextView nostar;
     private static BaseRatingBar ratingBar;
     private static ImageView cover;
-
+    private static String bmobtext="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -66,6 +69,15 @@ public class MovieDataActivity extends BaseActivity implements BaseQuickAdapter.
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        TextView fav=findViewById(R.id.fav);
+        fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BmobApi.UpLoadData(bmobtext,"movie");
+                Toast.makeText(MovieDataActivity.this, "收藏成功",Toast.LENGTH_LONG).show();
+
             }
         });
 
@@ -153,6 +165,7 @@ public class MovieDataActivity extends BaseActivity implements BaseQuickAdapter.
             introduce.setText(moviedata.introduce);
             averagerating.setText(moviedata.averagerating);
             numraters.setText(moviedata.numraters + "人评价");
+            bmobtext=moviedata.moviename+"@_@"+moviedata.coveruri+"@_@"+MovieBaseInfo.movielink;
             // ScaleRatingBar ratingBar = new ScaleRatingBar(mContext);
             //Log.i("123456", "handleMessage: "+mbookdata.averagerating);
             ratingBar.setRating(Float.valueOf(moviedata.averagerating) / 2);
