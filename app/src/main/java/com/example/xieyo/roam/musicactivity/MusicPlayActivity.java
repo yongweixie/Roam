@@ -428,7 +428,7 @@ public class MusicPlayActivity  extends BaseMusicActivity implements SeekBar.OnS
         if(!MusicBaseInfo.Currentmusiclist.get(bmobid).musicid.equals("local"))
         {
             Music bmc=MusicBaseInfo.Currentmusiclist.get(bmobid);
-            BmobApi.UpLoadData(bmc.artist+"@_@"+bmc.title+"@_@"+bmc.musicbmpUri+"@_@"+bmc.path+"@_@"+bmc.musicid+"@_@"+bmc.from,"music");
+            BmobApi.UpLoadData(bmc.artist+"@_@"+bmc.title+"@_@"+bmc.musicbmpUri+"@_@"+bmc.path+"@_@"+bmc.musicid+"@_@"+bmc.from,"music",getApplication());
             Toast.makeText(MusicPlayActivity.this, "收藏成功",Toast.LENGTH_LONG).show();
         }
         else

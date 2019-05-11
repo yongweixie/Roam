@@ -138,7 +138,7 @@ public class FavDigest extends BaseActivity implements BaseQuickAdapter.OnItemCl
         }
         if(index==1)
         {
-            BmobApi.UpLoadData(mtext,"zhaichao");
+            BmobApi.UpLoadData(mtext,"zhaichao",getApplication());
             Toast.makeText(FavDigest.this, "收藏成功",Toast.LENGTH_LONG).show();
         }
     }

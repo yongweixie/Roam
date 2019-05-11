@@ -48,8 +48,8 @@ public class MyMusicFragment extends Fragment  implements   BaseQuickAdapter.OnI
     private View localview,historyview,favoriteview,downloadview;
     private TextView songnum;
     private RecyclerView ry;
-    private static FavListAdapter mAdapter;
-    private static List<FavList> mList=new ArrayList<>();
+    private  FavListAdapter mAdapter;
+    private  List<FavList> mList=new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.mymusic_fragment, null);
@@ -154,12 +154,5 @@ public class MyMusicFragment extends Fragment  implements   BaseQuickAdapter.OnI
                 }
             }
         });
-
-
     }
-
-
-
-
-
 }

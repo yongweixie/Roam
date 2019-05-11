@@ -75,7 +75,7 @@ public class MovieDataActivity extends BaseActivity implements BaseQuickAdapter.
         fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BmobApi.UpLoadData(bmobtext,"movie");
+                BmobApi.UpLoadData(bmobtext,"movie",getApplication());
                 Toast.makeText(MovieDataActivity.this, "收藏成功",Toast.LENGTH_LONG).show();
 
             }

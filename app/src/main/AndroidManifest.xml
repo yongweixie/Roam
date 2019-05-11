@@ -76,6 +76,12 @@
             android:name=".FavMusic_Movie"
             android:launchMode="singleTask" />
         <activity
+            android:name=".BookRecommenedActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".MovieRecommenedActivity"
+            android:launchMode="singleTask" />
+        <activity
             android:name=".musicactivity.SearchActivity"
             android:launchMode="singleTask" />
         <activity

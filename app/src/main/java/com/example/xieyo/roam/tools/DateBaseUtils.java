@@ -2,7 +2,10 @@ package com.example.xieyo.roam.tools;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
+import com.example.xieyo.roam.bookbean.BookFragList;
+import com.example.xieyo.roam.moviebean.MovieFragList;
 import com.example.xieyo.roam.musicbean.Music;
 
 import java.util.ArrayList;
@@ -28,6 +31,113 @@ public class DateBaseUtils {
         editor2.commit();//提交修改
 
     }
+
+    public static void setReBook(String Link)//推荐的书
+    {
+
+        SharedPreferences sharedPreferences=con.getSharedPreferences("ReBook", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor2 = sharedPreferences.edit();//获取编辑器
+        StringBuffer linkbuffer=new StringBuffer();
+        StringBuffer coverbuffer=new StringBuffer();
+        StringBuffer namebuffer=new StringBuffer();
+
+        List<BookFragList> recommened=new ArrayList<>();
+        recommened.addAll(BookApi.getotherlike(Link));
+
+        for (int i=0;i<recommened.size();i++)
+        {
+            linkbuffer.append(recommened.get(i).booklink).append("@0@");
+            coverbuffer.append(recommened.get(i).coveruri).append("@0@");
+            namebuffer.append(recommened.get(i).name).append("@0@");
+
+        }
+
+        editor2.putString("linklist",sharedPreferences.getString("linklist","") +linkbuffer.toString());
+        editor2.putString("coverlist",sharedPreferences.getString("coverlist","") +coverbuffer.toString());
+        editor2.putString("namelist",sharedPreferences.getString("namelist","") +namebuffer.toString());
+        editor2.commit();
+
+    }
+    public static void setReMovie(String Link)//推荐的书
+    {
+        SharedPreferences sharedPreferences=con.getSharedPreferences("ReMovie", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor2 = sharedPreferences.edit();//获取编辑器
+        StringBuffer linkbuffer=new StringBuffer();
+        StringBuffer coverbuffer=new StringBuffer();
+        StringBuffer namebuffer=new StringBuffer();
+        List<MovieFragList> recommened=new ArrayList<>();//为了适配书的布局
+        recommened.addAll(MovieApi.getotherlike(Link));
+
+        for (int i=0;i<recommened.size();i++)
+        {
+            linkbuffer.append(recommened.get(i).movielink).append("@0@");
+            coverbuffer.append(recommened.get(i).coveruri).append("@0@");
+            namebuffer.append(recommened.get(i).name).append("@0@");
+
+        }
+
+        editor2.putString("linklist",sharedPreferences.getString("linklist","") +linkbuffer.toString());
+        editor2.putString("coverlist",sharedPreferences.getString("coverlist","") +coverbuffer.toString());
+        editor2.putString("namelist",sharedPreferences.getString("namelist","") +namebuffer.toString());
+        editor2.commit();
+
+    }
+    public static List<BookFragList> getMovieRecommened()
+    {
+        List<BookFragList> lb=new ArrayList<>();
+
+        SharedPreferences sharedPreferences=con.getSharedPreferences("ReMovie", Context.MODE_PRIVATE);
+        String linklist=sharedPreferences.getString("linklist","");
+        String coverlist=sharedPreferences.getString("coverlist","");
+        String namelist=sharedPreferences.getString("namelist","");
+
+
+        if (linklist.length()!=0)
+        {
+            for(int i=0;i<linklist.split("@0@").length;i++)
+            {
+                BookFragList bf =new BookFragList();
+                bf.from=1;
+                bf.type=2;
+                bf.booklink=linklist.split("@0@")[i];
+                bf.coveruri=coverlist.split("@0@")[i];
+                bf.name=namelist.split("@0@")[i];
+                lb.add(bf);
+            }
+        }
+
+        return  lb;
+    }
+
+    public static List<BookFragList> getBookRecommened()
+    {
+        List<BookFragList> lb=new ArrayList<>();
+
+        SharedPreferences sharedPreferences=con.getSharedPreferences("ReBook", Context.MODE_PRIVATE);
+        String linklist=sharedPreferences.getString("linklist","");
+        String coverlist=sharedPreferences.getString("coverlist","");
+        String namelist=sharedPreferences.getString("namelist","");
+
+
+        if (linklist.length()!=0)
+        {
+            for(int i=0;i<linklist.split("@0@").length;i++)
+            {
+                BookFragList bf =new BookFragList();
+                bf.from=1;
+                bf.type=2;
+                bf.booklink=linklist.split("@0@")[i];
+                bf.coveruri=coverlist.split("@0@")[i];
+                bf.name=namelist.split("@0@")[i];
+
+                lb.add(bf);
+            }
+        }
+
+        return  lb;
+    }
+
+
     public static void setUserInfo(String phone)
     {
 

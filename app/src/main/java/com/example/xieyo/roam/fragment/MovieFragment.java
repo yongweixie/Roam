@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.xieyo.roam.LazyFragment;
+import com.example.xieyo.roam.MovieRecommenedActivity;
 import com.example.xieyo.roam.baseinfo.MovieBaseInfo;
 import com.example.xieyo.roam.MyAdapter.MovieFragAdapter;
 import com.example.xieyo.roam.R;
@@ -86,6 +87,7 @@ public class MovieFragment extends LazyFragment implements BaseQuickAdapter.OnIt
                         return 6;
                     default:
                         return 6;//占据一个位置
+
                 }
             }
         });
@@ -171,6 +173,9 @@ public class MovieFragment extends LazyFragment implements BaseQuickAdapter.OnIt
             case R.id.movie_list:
                 startActivity(new Intent(getContext(), MovieDigest.class));
                 break;
+            case R.id.movie_recommened:
+                startActivity(new Intent(getContext(), MovieRecommenedActivity.class));
+            break;
             default:
 
                 break;

@@ -215,6 +215,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 //启动Intent
                 startActivity(intent);
                 break;
+            case R.id.appabout:
+                Toast.makeText(this, "v 1.1.1", Toast.LENGTH_SHORT).show();
+
 
         }
     }

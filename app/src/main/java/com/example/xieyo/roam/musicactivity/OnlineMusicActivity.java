@@ -174,7 +174,7 @@ public class OnlineMusicActivity extends BaseActivity implements BaseQuickAdapte
         favlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BmobApi.UpLoadData(bmobtext,"favlist");
+                BmobApi.UpLoadData(bmobtext,"favlist",getApplication());
                 Toast.makeText(OnlineMusicActivity.this, "收藏成功",Toast.LENGTH_LONG).show();
 
             }

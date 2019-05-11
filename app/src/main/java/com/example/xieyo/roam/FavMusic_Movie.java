@@ -15,10 +15,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.xieyo.roam.MyAdapter.BookFragAdapter;
 import com.example.xieyo.roam.baseinfo.BaseInfo;
 import com.example.xieyo.roam.baseinfo.BookBaseInfo;
+import com.example.xieyo.roam.baseinfo.MovieBaseInfo;
 import com.example.xieyo.roam.bookactivity.BookDataActivity;
 import com.example.xieyo.roam.bookactivity.NewBookAll;
 import com.example.xieyo.roam.bookbean.BookDigestData;
 import com.example.xieyo.roam.bookbean.BookFragList;
+import com.example.xieyo.roam.movieactivity.MovieDataActivity;
 import com.example.xieyo.roam.tools.BookApi;
 import com.example.xieyo.roam.view.SpacesItemDecoration;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -130,10 +132,18 @@ public class FavMusic_Movie extends BaseActivity implements BaseQuickAdapter.OnI
 
 
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
-        BookBaseInfo.booklink=bList.get(position).booklink;
-        Intent intent = new Intent(this, BookDataActivity.class);
-        startActivity(intent);
+        if(extar_data.equals("book"))
+        {
+            BookBaseInfo.booklink=bList.get(position).booklink;
+            Intent intent = new Intent(this, BookDataActivity.class);
+            startActivity(intent);
+        }
+        if(extar_data.equals("movie"))
+        {
+            MovieBaseInfo.movielink=bList.get(position).booklink;
+            Intent intent = new Intent(this, MovieDataActivity.class);
+            startActivity(intent);
+        }
     }
 
 

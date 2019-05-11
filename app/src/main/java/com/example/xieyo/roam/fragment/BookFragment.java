@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.example.xieyo.roam.BookRecommenedActivity;
 import com.example.xieyo.roam.baseinfo.BookBaseInfo;
 import com.example.xieyo.roam.LazyFragment;
 import com.example.xieyo.roam.MyAdapter.BookFragAdapter;
@@ -208,6 +209,9 @@ public class BookFragment extends LazyFragment implements BaseQuickAdapter.OnIte
             case R.id.book_list:
                 startActivity(new Intent(getContext(), BookDigest.class));
                 break;
+            case R.id.book_recommended:
+                startActivity(new Intent(getContext(), BookRecommenedActivity.class));
+break;
             default:
 
                 break;

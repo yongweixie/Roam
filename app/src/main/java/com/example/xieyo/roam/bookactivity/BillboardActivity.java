@@ -27,7 +27,6 @@ public class BillboardActivity extends BaseActivity {
         webSettings.setLoadWithOverviewMode(true);
         webSettings.setMediaPlaybackRequiresUserGesture(false);
         webview.loadUrl("https://book.douban.com/annual/2018?source=navigation");
-
     }
 
     @Override
@@ -40,7 +39,6 @@ public class BillboardActivity extends BaseActivity {
             webview.clearHistory();
             webview.removeAllViews();
             webview.destroy();
-
         }
         super.onDestroy();
     }

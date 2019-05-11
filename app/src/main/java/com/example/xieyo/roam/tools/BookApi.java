@@ -163,8 +163,10 @@ public class BookApi {
             }
 
         } catch (Exception e) {
+            Log.i("1234567", "getotherlike: "+e.toString());
 
         }
+        Log.i("1234567", "getotherlike: "+bflist.size());
         return bflist;
     }
 
@@ -201,6 +203,7 @@ public class BookApi {
             {
                 bd.averagerating="0.0";
             }
+            Log.i("1234567", "getBookData: "+bd.averagerating);
 
             if (jsonObject.getString("author_intro").length() > 1) {
                 bd.artistintroduce = jsonObject.getString("author_intro");

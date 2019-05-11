@@ -28,6 +28,7 @@ import com.example.xieyo.roam.bookbean.BookData;
 import com.example.xieyo.roam.bookbean.BookFragList;
 import com.example.xieyo.roam.tools.BmobApi;
 import com.example.xieyo.roam.tools.BookApi;
+import com.example.xieyo.roam.tools.DateBaseUtils;
 import com.example.xieyo.roam.tools.ratingview;
 import com.example.xieyo.roam.view.SpacesItemDecoration;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -74,7 +75,7 @@ public class BookDataActivity extends BaseActivity  implements BaseQuickAdapter.
         fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BmobApi.UpLoadData(bmobtext,"book");
+                BmobApi.UpLoadData(bmobtext,"book",getApplication());
                 Toast.makeText(BookDataActivity.this, "收藏成功",Toast.LENGTH_LONG).show();
 
             }

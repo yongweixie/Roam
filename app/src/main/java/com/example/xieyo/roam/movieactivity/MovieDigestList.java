@@ -169,7 +169,7 @@ public class MovieDigestList extends BaseActivity implements BaseQuickAdapter.On
         }
         if (index==1)
         {
-            BmobApi.UpLoadData(mtext,"taici");
+            BmobApi.UpLoadData(mtext,"taici",getApplication());
             Toast.makeText(MovieDigestList.this, "收藏成功",Toast.LENGTH_LONG).show();
         }
     }
